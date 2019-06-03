@@ -1,0 +1,12 @@
+{
+  "Objects": [
+    {
+      "ID": 1,
+      "Name": "TestObject_1",
+      "Texture": "Tile1",
+      "Solid": true,
+      "CanInteract": true,
+      "Information": "This is a test Object, Used for testing,This is a test@ Object, Used@ for testing"
+    }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "Tiles": [
+    {
+      "ID": 1,
+      "Name": "Path_Side_Left_1",
+      "Texture": "Tile1",
+      "Solid": true,
+      "Sound": "NULL",
+      "Speed_Bonus": "NULL"
+    },
+    {
+      "ID": 2,
+      "Name": "Path_Side_Right_1",
+      "Texture": "Tile2",
+      "Solid": true,
+      "Sound": "NULL",
+      "Speed_Bonus": "NULL"
+    },
+    {
+      "ID": 3,
+      "Name": "Path_1",
+      "Texture": "Path_Left_1",
+      "Solid": false,
+      "Sound": "NULL",
+      "Speed_Bonus": "NULL"
+    }
+
+  ]
+}

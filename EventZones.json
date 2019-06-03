@@ -1,0 +1,10 @@
+{
+  "EventZones": [
+    {
+      "ID": 1,
+      "YPosition": 6,
+      "LoadEvent": 1,
+      "SingleUse":  true
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "Size": {
+    "X_Size": 200,
+    "Y_Size": 100
+  },
+
+  "Textbox_Speed": 4,
+  "Char_Per_Line": 50,
+
+  "Types": [
+    {
+      "ID": 1,
+      "Texture": "Tile1",
+      "Lines_Per_Box":  4
+    },
+    {
+      "ID": 2,
+      "Texture": "Tile2",
+      "Lines_Per_Box":  4
+    }
+  ]
+  
+
+
+}
