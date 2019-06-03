@@ -17,6 +17,7 @@ namespace Prologue
         public Texture2D imgPlayer { get; set; } 
         public Texture2D Path_Left_1 { get; set; }
         public SpriteFont Arial20 { get; set; }
+        public Texture2D Textbox_Sprite { get; set; }
 
         public PrologueContent(ContentManager Content)
         {
@@ -24,6 +25,7 @@ namespace Prologue
             Tile2 = Content.Load<Texture2D>("Path_Side_Left_1");
             Path_Left_1 = Content.Load<Texture2D>("Path_Middle_Left_1");
             imgPlayer = Content.Load<Texture2D>("PlayerPlaceHolder");
+            Textbox_Sprite = Content.Load<Texture2D>("Textbox_SpriteSheet");
 
             Arial20 = Content.Load<SpriteFont>("Arial20");
         }

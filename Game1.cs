@@ -34,7 +34,8 @@ namespace Prologue
 
         public bool intersect;
 
-        
+
+
 
         public Game1()
         {
@@ -80,10 +81,12 @@ namespace Prologue
             Console.WriteLine("GRIDSIZE IS " + Screen.GridSize);
 
             map1 = new Map(prologueContent, spriteBatch);
-            player = new Player(3, 13, FrontSpriteBatch, prologueContent, Map.Tilelist);
+            player = new Player(3, 4, FrontSpriteBatch, prologueContent, Map.Tilelist);
             npc1 = new NPC(4, 12, "Mathijs", FrontSpriteBatch, prologueContent);
 
-            Vector2 Location = new Vector2(100, 100);
+            SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Textbox_SpriteSheet"));
+
+        Vector2 Location = new Vector2(100, 100);
             //Textbox.TextBoxes.Add(new InformationTextBox( "HALLO HOE GAAT ET ERMEE@ Persoonlijk gaat het wel redelijk met mij, de bedoeling van deze zin is is dat ie tering lang word zodat hij gesplit moet worden@ Maar.. Maar@ Ohhnee@stut@stut@stutterrr@Jahoor@volgende pagina aub dankuwel@", 600, 150, FrontSpriteBatch, prologueContent));
 
             //TestObject = new Objects(7, 7, 1, FrontSpriteBatch, prologueContent);
@@ -242,9 +245,9 @@ namespace Prologue
                 Textbox.Draw();
             }
 
-            FrontSpriteBatch.End();
-            
+            SpriteSheet.screenDraw("Textbox_SpriteSheet", 0, 1, new Vector2(100, 100), FrontSpriteBatch);
 
+            FrontSpriteBatch.End();
 
 
             // TODO: Add your drawing code here

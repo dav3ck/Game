@@ -1,0 +1,85 @@
+{
+  "Name": "Textbox_SpriteSheet",
+  "Image":  "Textbox_Sprite",
+  "Row": 4,
+  "Frames": 3,
+  "size": {
+    "w": 90,
+    "h": 120
+  },
+  "Animation":  false,
+  "Rows": [
+    {
+      "RowNum": 1,
+      "Information": "Top Row Textbox Texture",
+      "Frames": [
+        {
+          "FrameNumber": 1,
+          "Name": "Textbox_TopRight_Corner"
+        },
+        {
+          "FrameNumber": 2,
+          "Name": "Textbox_Top"
+        },
+        {
+          "FrameNumber": 3,
+          "Name": "Textbox_TopLeft_Corner"
+        }
+      ]
+    },
+    {
+      "RowNum": 2,
+      "Information": "Middle Row Textbox Texture",
+      "Frames": [
+        {
+          "FrameNumber": 1,
+          "Name": "Textbox_Middle_Right"
+        },
+        {
+          "FrameNumber": 2,
+          "Name": "Textbox_Middle"
+        },
+        {
+          "FrameNumber": 3,
+          "Name": "Textbox_Middle_Left"
+        }
+      ]
+    },
+    {
+      "RowNum": 3,
+      "Information": "Bottom Row Textbox texture",
+      "Frames": [
+        {
+          "FrameNumber": 1,
+          "Name": "Textbox_BottomRight_Corner"
+        },
+        {
+          "FrameNumber": 2,
+          "Name": "Textbox_Bottom"
+        },
+        {
+          "FrameNumber": 3,
+          "Name": "Textbox_BottomLeft_Corner"
+        }
+      ]
+    },
+    {
+      "RowNum": 4,
+      "Information": "Name Row Textbox texture",
+      "Frames": [
+        {
+          "FrameNumber": 1,
+          "Name": "Name_TopRight_Corner"
+        },
+        {
+          "FrameNumber": 2,
+          "Name": "Name_Top"
+        },
+        {
+          "FrameNumber": 3,
+          "Name": "Name_TopLeft_Corner"
+        }
+      ]
+    }
+  ]
+}
