@@ -130,7 +130,7 @@ namespace Prologue
 
         public void Interact()
         {
-            Textbox.TextBoxes.Add( new InformationTextBox(this.Information, "Object" , 200, 200, this.FrontSpriteBatch, this.prologueContent));
+            Textbox.TextBoxes.Add( new SpeechTextbox(this.Information, "Object" ,"Me"));
         }
 
 

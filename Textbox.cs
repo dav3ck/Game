@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 using Newtonsoft.Json.Linq;
 using System.IO;
 
@@ -25,13 +26,13 @@ namespace Prologue
         public int SizeX { get; set; }
         public int SizeY { get; set; }
 
-        private static List<string> LinesOnscreen { get; set; }
-        private static int OnPage { get; set; }
-        private static int OnLine { get; set; }
-        private static int OnLetter { get; set; }
-        public static bool SkipText { get; set; }
-        public static bool Continue { get; set; }
-        public static bool Finish { get; set; }
+        private List<string> LinesOnscreen { get; set; }
+        private int OnPage { get; set; }
+        public int OnLine { get; set; }
+        private int OnLetter { get; set; }
+        public bool SkipText { get; set; }
+        public bool Continue { get; set; }
+        public bool Finish { get; set; }
 
         private Texture2D TextBoximg { get; set; }
         private SpriteBatch FrontSpriteBatch;
@@ -43,17 +44,16 @@ namespace Prologue
         public int Textbox_Speed { get; set; }
         public int Lines_Per_Box { get; set; }
 
-        public static string Caller { get; set; }
+        public string Caller { get; set; }
 
         public static List<Textbox> TextBoxes = new List<Textbox>();
 
         public Textbox(String FullText, string Caller)
         {
-            Delete();
 
             Player.Frozen = true;
 
-            Textbox.Caller = Caller;
+            this.Caller = Caller;
             this.FullText = FullText;
             this.prologueContent = Game1.prologueContent;
 
@@ -75,9 +75,9 @@ namespace Prologue
 
             _Timer = 0;
 
-            TextBoxes.Add(this);
+            //TextBoxes.Add(this);
 
-            Console.WriteLine("???????????");
+            //Console.WriteLine("???????????");
 
             SplitInLines();
         }
@@ -169,14 +169,14 @@ namespace Prologue
 
         }
 
-        public void TextBoxUpdate()
+        public void TextboxUpdate()
         {
 
             //General Logic for properly displaying all Text Lines Combined with a Slow mode, so the text isnt instant
 
             if (this.AllLines.Count == OnLine + OnPage * this.Lines_Per_Box)
             {
-                Finish = true;
+                Finish = true; //If All the Lines have been displayed
             }
             if (Finish == false && (_Timer % this.Textbox_Speed == 0 || SkipText == true))
             {
@@ -196,30 +196,28 @@ namespace Prologue
             }
 
             _Timer += 1;
+
         }
 
-        public static void NextPage()
+        public void NextPage()
         {
-
             //If the OnLine variable = 4, Aka the page is full, the game wil wait for PlayerInput to go to the next page, this Page switching happens here.
-            if (Continue == false)
-            {
-                Continue = true;
-                OnLine = 0;
-                OnPage += 1;
-                OnLetter = 0;
-                SkipText = false;
+            Textbox textbox = this;
 
-                LinesOnscreen = new List<string>{ "","","",""};
-                    
-            }
+            textbox.Continue = true;
+            textbox.OnLine = 0;
+            textbox.OnPage += 1;
+            textbox.OnLetter = 0;
+            textbox.SkipText = false;
+
+            textbox.LinesOnscreen = new List<string> { "","","",""};
         }
 
-        public void Draw()
+        public void TextboxDraw()
         {
             FrontSpriteBatch.Draw(TextBoximg, new Rectangle((int)(this.Location.X), (int)(this.Location.Y), SizeX, SizeY), Color.Green); // REPROGRAMM
 
-            int y = 440;
+            int y = 440; //Location still hardcoded??? -----------------------------
             for (int x = 0; x < Lines_Per_Box; x++)
             {
                 FrontSpriteBatch.DrawString(prologueContent.Arial20, LinesOnscreen[x], new Vector2(220, y), Color.Black);
@@ -229,17 +227,63 @@ namespace Prologue
 
         public static void Delete()
         {
-            TextBoxes.Clear();
+            List<Textbox> textbox = Textbox.TextBoxes.FindAll(x => x.Finish == true);
 
-            if (Textbox.Caller == "Event")
+            if (textbox == null) { return; }
+
+            foreach (var x in textbox)
             {
-                EventHandler.Continue = true;
-                Textbox.Caller = "";
-                EventHandler.EventUpdate();
+                if (x.Caller == "Event")
+                {
+                    EventHandler.Continue = true;
+                    EventHandler.EventUpdate();
+                }
+                else
+                {
+                    Player.Frozen = false;
+                }
             }
-            else
+
+            SpeechTextbox.SpeechTextBoxes.RemoveAll(x => x.Finish == true);
+            InformationTextBox.InformationTextBoxes.RemoveAll(x => x.Finish == true);
+            QuestionBox.QuestionBoxes.RemoveAll(x => x.Finish == true);
+            Textbox.TextBoxes.RemoveAll(x => x.Finish == true);  
+
+        }
+
+        public static void Update()
+        {
+            if(SpeechTextbox.SpeechTextBoxes.Any())
             {
-                Player.Frozen = false;
+                SpeechTextbox.SpeechTextBoxes.ForEach(x => x.SpeechBoxUpdate());
+            }
+
+            if (InformationTextBox.InformationTextBoxes.Any())
+            {
+                InformationTextBox.InformationTextBoxes.ForEach(x => x.InformationBoxUpdate());
+            }
+
+            if (QuestionBox.QuestionBoxes.Any())
+            {
+                QuestionBox.QuestionBoxes.ForEach(x => x.QuestionBoxUpdate());
+            }
+        }
+
+        public static void Draw()
+        {
+            if (SpeechTextbox.SpeechTextBoxes.Any())
+            {
+                SpeechTextbox.SpeechTextBoxes.ForEach(x => x.SpeechBoxDraw());
+            }
+
+            if (InformationTextBox.InformationTextBoxes.Any())
+            {
+                InformationTextBox.InformationTextBoxes.ForEach(x => x.InformationBoxDraw());
+            }
+
+            if (QuestionBox.QuestionBoxes.Any())
+            {
+                QuestionBox.QuestionBoxes.ForEach(x => x.QuestionBoxDraw());
             }
         }
     }
@@ -247,17 +291,138 @@ namespace Prologue
 
     //Same as with the objects, Different Kind of TextBox wil have different Functions, so a different class.
 
-    class InformationTextBox : Textbox
+    class SpeechTextbox : Textbox
     {
-        public InformationTextBox(String FullText, string Type , int SizeX, int SizeY, SpriteBatch FrontSpriteBatch, PrologueContent prologueContent) : base(FullText, Type)
+        public string Name { get; set; }
+
+        public static List<SpeechTextbox> SpeechTextBoxes = new List<SpeechTextbox>();
+
+        public SpeechTextbox(String FullText, string Caller, string _Name) : base(FullText, Caller)
         {
+            SpeechTextBoxes.Add(this);
         }
 
+        public void SpeechBoxUpdate()
+        {
+            TextboxUpdate();
+        }
+
+        public void SpeechBoxDraw()
+        {
+            TextboxDraw();
+        }
     }
 
 
-  /*  class QuestionTextBox : Textbox
+    class InformationTextBox : Textbox
     {
 
-    } */
+        public static List<InformationTextBox> InformationTextBoxes = new List<InformationTextBox>();
+
+        public InformationTextBox(string FullText, string Caller) : base(FullText, Caller)
+        {
+            InformationTextBoxes.Add(this);
+        }
+
+        public void InformationBoxUpdate()
+        {
+            TextboxUpdate();
+        }
+
+        public void InformationBoxDraw()
+        {
+            TextboxDraw();
+        }
+    } 
+
+    class QuestionBox : Textbox
+    {
+        public static List<QuestionBox> QuestionBoxes = new List<QuestionBox>();
+        public List<string> Answers { get; set; }
+
+        public int SelectedAnswer { get; set; }
+        public int AnswerCount { get; set; }
+
+        public QuestionBox(string FullText, string Caller, List<string> _answers) : base(FullText, Caller)
+        {
+
+            this.Answers = _answers;
+
+            this.AnswerCount = this.Answers.Count;
+            this.SelectedAnswer = 0;
+
+            QuestionBoxes.Add(this);
+
+            /*
+            foreach (string answer in _answers)
+            {
+                Answers.Add(answer.Replace("@", System.Environment.NewLine));
+            } */
+            QuestionBoxUpdate();
+        }
+
+        public void QuestionBoxUpdate()
+        {
+            TextboxUpdate();
+
+            if (this.Finish == true)
+            {
+
+                if (Game1.newKeyboardState.IsKeyDown(Keys.W) && !Game1.oldKeyboardState.IsKeyDown(Keys.W))
+                {
+                    this.SelectedAnswer -= 1;
+                }
+                if (Game1.newKeyboardState.IsKeyDown(Keys.S) && !Game1.oldKeyboardState.IsKeyDown(Keys.S))
+                {
+                    this.SelectedAnswer += 1;
+
+                }
+                if(Game1.newKeyboardState.IsKeyDown(Keys.Space) && !Game1.oldKeyboardState.IsKeyDown(Keys.Space))
+                {
+                    FinishSelection();
+                }
+
+                if (SelectedAnswer < 0)
+                {
+                    this.SelectedAnswer = this.AnswerCount - 1;
+                }
+                if (SelectedAnswer >= this.AnswerCount)
+                {
+                    this.SelectedAnswer = 0;
+                }
+            }
+        }
+
+        public void FinishSelection()
+        {
+            //Store hier de DATA !!
+            Console.WriteLine("U done now!");
+            //this.Finish = true;
+        }
+
+        public void QuestionBoxDraw()
+        {
+            TextboxDraw();
+
+            if (this.Finish == true)
+            {
+                int StartPosition = this.OnLine * 40 + 440;
+
+                for (int x = 0; x < this.Answers.Count; x++)
+                {
+                    if (x == this.SelectedAnswer)
+                    {
+                        Game1.FrontSpriteBatch.DrawString(Game1.prologueContent.Arial20, " X ", new Vector2(220, StartPosition), Color.Black);
+                        Game1.FrontSpriteBatch.DrawString(Game1.prologueContent.Arial20, Answers[x], new Vector2(230, StartPosition), Color.Black);
+                    }
+                    else
+                    {
+                        Game1.FrontSpriteBatch.DrawString(Game1.prologueContent.Arial20, Answers[x], new Vector2(230, StartPosition), Color.Black);
+                    }
+                    StartPosition += 40;
+                }
+            }
+        }
+    }
+
 }

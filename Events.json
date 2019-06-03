@@ -11,29 +11,10 @@
           "Wait": true
         },
         {
-          "Type": 11,
-          "NPCname": "Mathijs",
-          "Goal": {
-            "X": 3,
-            "Y": 4
-          },
-          "Wait": true
-        },
-        {
-          "Type": 11,
-          "NPCname": "Mathijs",
-          "Goal": {
-            "X": 4,
-            "Y": 12
-          },
-          "Wait": false
-        },
-        {
-          "Type": 10,
-          "Goal": {
-            "X": 3,
-            "Y": 12
-          },
+          "Type": 3,
+          "Text": "Gaat dit in een keer werken???",
+          "Speaker": "David",
+          "Answers": [ "Nee", "Mischien keep praying", "Natuurlijk, Davy is geniuus" ],
           "Wait": true
         }
       ]

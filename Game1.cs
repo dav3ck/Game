@@ -22,7 +22,7 @@ namespace Prologue
         public static PrologueContent prologueContent;
 
         private MouseState oldMouseState;
-        private KeyboardState oldKeyboardState;
+        public static KeyboardState newKeyboardState, oldKeyboardState;
 
         public double GridSizeWidth, GridSizeHeight, GridSize;
 
@@ -113,7 +113,7 @@ namespace Prologue
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            KeyboardState newKeyboardState = Keyboard.GetState();
+            newKeyboardState = Keyboard.GetState();
             MouseState newMouseState = Mouse.GetState();
 
             //Keyboard Input Registration 
@@ -135,16 +135,21 @@ namespace Prologue
             }
             if (oldKeyboardState.IsKeyDown(Keys.Q) && newKeyboardState.IsKeyUp(Keys.Q))
             {
-                if (Textbox.Finish == true)
-                    Textbox.Delete();
-
-                else if (Textbox.Continue == false)
+                foreach (var x in Textbox.TextBoxes)
                 {
-                    Textbox.SkipText = false;
-                    Textbox.NextPage();
+                    if (x.Continue == false)
+                    {
+                        x.SkipText = false;
+                        x.NextPage();
+                    }
+
+                    else { x.SkipText = true; }
                 }
 
-                else { Textbox.SkipText = true; }
+                if (Textbox.TextBoxes.Any(x => x.Finish == true))
+                {
+                    Textbox.Delete();
+                }
             }
             if(newKeyboardState.IsKeyDown(Keys.X) && !oldKeyboardState.IsKeyDown(Keys.X))
             {
@@ -167,7 +172,7 @@ namespace Prologue
 
                 //-----------------------------
 
-            oldKeyboardState = newKeyboardState;
+
 
             //Updating of all the classes, This is a temperary Test setup
 
@@ -194,14 +199,15 @@ namespace Prologue
                 }
             }
 
-
-            foreach(var Textbox in Textbox.TextBoxes)
+            if (Textbox.TextBoxes.Any() == true)
             {
-                Textbox.TextBoxUpdate();
+                Textbox.Update();
             }
 
 
             base.Update(gameTime);
+
+            oldKeyboardState = newKeyboardState;
         }
 
         /// <summary>
@@ -230,10 +236,12 @@ namespace Prologue
             {
                 _object.Draw();
             }
-            foreach (var Textbox in Textbox.TextBoxes)
+
+            if (Textbox.TextBoxes.Any() == true)
             {
                 Textbox.Draw();
             }
+
             FrontSpriteBatch.End();
             
 

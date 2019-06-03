@@ -66,7 +66,6 @@ namespace Prologue
 
         public void Update()
         {
-
             if (Continue == true)
             {
                 if (this.FullEvent.Count - 1 == CurrentStep)
@@ -98,6 +97,7 @@ namespace Prologue
                 case 2: //Thought Textbox
                     break;
                 case 3: // Question Textbox
+                    Question();
                     break;
                 case 4: // SpawnNPC
                     LoadNPC();
@@ -135,13 +135,29 @@ namespace Prologue
             string _name = this.CurrentAction["Speaker"];
             string _text = this.CurrentAction["Text"];
 
-            Textbox.TextBoxes.Add(new InformationTextBox(_text,"Event", 600, 150, Game1.FrontSpriteBatch, Game1.prologueContent));
+
+
+            Textbox.TextBoxes.Add(new SpeechTextbox(_text,"Event", _name));
+        }
+
+        private void Question()
+        {
+
+            string _speaker = this.CurrentAction["Speaker"];
+            string _text = this.CurrentAction["Text"];
+
+            var _answers = this.CurrentAction["Answers"];
+            List<string> _answerslist = new List<string>();
+            foreach (string x in _answers)
+            {
+                _answerslist.Add(x);
+            }
+
+            Textbox.TextBoxes.Add(new QuestionBox(_text, "Event", _answerslist));
         }
 
         private void LoadNPC()
         {
-
-
             string _NPC = this.CurrentAction["NPCname"];
             int _XLocation = this.CurrentAction["Location"]["X"];
             int _YLocation = this.CurrentAction["Location"]["Y"];
@@ -184,8 +200,6 @@ namespace Prologue
 
         private void WalkPlayer()
         {
-                      Console.WriteLine("???????");
-
             int _x = this.CurrentAction["Goal"]["X"];
             int _y = this.CurrentAction["Goal"]["Y"];
             bool _wait = this.CurrentAction["Wait"];
