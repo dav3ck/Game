@@ -108,6 +108,7 @@ namespace Prologue
                 }
             }
 
+
             PathFinderTile Tile = PathFinderTile.PathTiles.Find(x => x.Cords.Equals(StartPosition));
             Tile.On = true;
             Tile.Beginnin = true;
@@ -130,6 +131,7 @@ namespace Prologue
             }*/
 
 
+
             foreach (PathFinderTile z in DeletedTiles)
             {
                 PathFinderTile.PathTiles.Remove(z);
@@ -140,7 +142,7 @@ namespace Prologue
 
             while (!PathFinderTile.PathTiles.Any(x => x.Cords.Equals(Goal) && x.On == true))
             {
-                if (Itteration > 50)
+                if (Itteration > 1)
                 {
                     Console.WriteLine("CROSSED MAX ITTERATIONS --------------");
                     return ImpossiblePath(StartPosition, Goal);
@@ -148,6 +150,7 @@ namespace Prologue
                 PathFinderTile.CheckForPath();
                 Itteration++;
             }
+
 
             PathFinderTile PathTile = PathFinderTile.PathTiles.Find(x => x.Cords.Equals(Goal));
             Path.Add(PathTile.Cords);
@@ -174,12 +177,6 @@ namespace Prologue
                 Path.Add(PathTile.Cords);
 
             }
-
-            foreach (var _x in Path)
-            {
-                Console.WriteLine("Dit is het Path : " + _x);
-            }
-            Console.WriteLine(Itteration);
             
             Path.Reverse();
             return Path;
@@ -193,7 +190,7 @@ namespace Prologue
 
         private static List<Tuple<int, int>> ImpossiblePath(Tuple<int, int> StartPosition, Tuple<int, int> Goal)
         {
-            //Console.WriteLine("Paths impossible");
+            Console.WriteLine("Paths impossible");
 
             int DifferenceX = StartPosition.Item1 - Goal.Item1;
             int DifferenceY = StartPosition.Item2 - Goal.Item2;
@@ -258,7 +255,8 @@ namespace Prologue
 
         public bool Beginnin { get; set; }
         public bool On { get; set; }
-        public bool tested { get; set; }
+        public bool Filled { get; set; }
+        public bool Tested { get; set; }
         public Tuple<int,int> Carrier { get; set; }
 
         public static List<PathFinderTile> PathTiles = new List<PathFinderTile>();
@@ -270,7 +268,8 @@ namespace Prologue
             this.Beginnin = false;
 
             this.Carrier = null;
-            this.tested = false;
+            this.Filled = false;
+            this.Tested = false;
 
             this.North = Tuple.Create(Cords.Item1, Cords.Item2 - 1);
             this.East = Tuple.Create(Cords.Item1 + 1, Cords.Item2);
@@ -282,14 +281,13 @@ namespace Prologue
         {
             foreach (PathFinderTile _Tile in PathTiles)
             {
-                if (_Tile.On == true && _Tile.tested == false)
+                if (_Tile.On == true && _Tile.Tested == false)
                 {
-                    List<PathFinderTile> _TempList = new List<PathFinderTile>(PathTiles.FindAll(x => x.Cords.Equals(_Tile.South) || x.Cords.Equals( _Tile.North) || x.Cords.Equals(_Tile.East) || x.Cords.Equals(_Tile.West)));
-
+                    List<PathFinderTile> _TempList = new List<PathFinderTile>(PathTiles.FindAll(x => x.Cords.Equals(_Tile.South) || x.Cords.Equals(_Tile.North) || x.Cords.Equals(_Tile.East) || x.Cords.Equals(_Tile.West)));
 
                     foreach (PathFinderTile x in _TempList)
                     {
-                        _Tile.tested = true;
+                        _Tile.Tested = true;
 
                         if (x.On != true)
                         {
@@ -299,6 +297,7 @@ namespace Prologue
                     }
                 }
             }
+        
         }
 
 

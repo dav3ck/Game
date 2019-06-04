@@ -82,7 +82,7 @@ namespace Prologue
 
             map1 = new Map(prologueContent, spriteBatch);
             player = new Player(3, 4, FrontSpriteBatch, prologueContent, Map.Tilelist);
-            npc1 = new NPC(4, 12, "Mathijs", FrontSpriteBatch, prologueContent);
+            //npc1 = new NPC(4, 12, "Mathijs", FrontSpriteBatch, prologueContent);
 
             SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Textbox_SpriteSheet"));
             Textbox.LoadTextBoxData();
@@ -157,15 +157,11 @@ namespace Prologue
             }
             if(newKeyboardState.IsKeyDown(Keys.X) && !oldKeyboardState.IsKeyDown(Keys.X))
             {
-                /*foreach (var objects in Objects.ObjectList)
+                List<Tuple<int,int>> TestPath = Utility.GeneratePath(Tuple.Create(1,1), Tuple.Create(50,50));
+                foreach( Tuple<int,int> z in TestPath)
                 {
-                    if (objects.CanInteract == true)
-                    {
-                        objects.Interact();
-                    }
-                }*/
-
-                NPC.RemoveNPC("Mathijs");
+                    Console.WriteLine(z);
+                }
             }
             if (newKeyboardState.IsKeyDown(Keys.E) && !oldKeyboardState.IsKeyDown(Keys.E))
             {
@@ -250,7 +246,7 @@ namespace Prologue
 
             FrontSpriteBatch.End();
 
-
+            //Console.WriteLine(gameTime.TotalGameTime);
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

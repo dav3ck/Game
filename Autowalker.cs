@@ -50,8 +50,6 @@ namespace Prologue
 
             //WalkDirection(this.CurrentPosition, Goal);
             CalculateWalk();
-
-            Update();
         }
 
         private void CenterinTile()

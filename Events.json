@@ -22,19 +22,50 @@
 
     {
       "Event": 2,
-      "AmountofItems": 2,
+      "AmountofItems": 1,
       "Order": [
         {
-          "Type": 1,
-          "Text": "TESTESTST1",
-          "Speaker": "David"
+          "Type": 4,
+          "NPCname": "Mathijs",
+          "Location": {
+            "X": 3,
+            "Y": 4
+          },
+          "Wait": false
         },
         {
-          "Type": 1,
-          "Text": "TEST TEST TEST 2",
-          "Speaker": "David2"
+          "Type": 11,
+          "NPCname": "Mathijs",
+          "Goal": {
+            "X": 6,
+            "Y": 50
+          },
+          "Wait": false
         }
       ]
     }
   ]
 }
+
+/*
+        {
+          "Type": 11,
+          "NPCname": "Mathijs",
+          "Goal": {
+            "X": 3,
+            "Y": 4
+          },
+          "Wait": false
+        }, 
+  ------------------------------------
+         {
+          "Type": 4,
+          "NPCname": "Mathijs",
+          "Location": {
+            "X": 1,
+            "Y": 1
+          },
+          "Wait": false
+        }
+
+*/

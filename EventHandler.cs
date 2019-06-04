@@ -14,8 +14,8 @@ namespace Prologue
 {
     class EventHandler
     {
-        private dynamic FullEvent { get; set; }
-        private dynamic CurrentAction { get; set; }
+        private JArray FullEvent { get; set; }
+        private JObject CurrentAction { get; set; }
         public int AmountSteps { get; set; }
         public int CurrentStep { get; set; }
         public int CurrentEventType { get; set; }
@@ -53,7 +53,7 @@ namespace Prologue
                 {
                     if (Event == (int)item["Event"])
                     {
-                        this.FullEvent = item["Order"];
+                        this.FullEvent = (JArray)item["Order"];
                         this.AmountSteps = (int)item["AmountofItems"];
                     }
                 }
@@ -68,7 +68,7 @@ namespace Prologue
         {
             if (Continue == true)
             {
-                if (this.FullEvent.Count - 1 == CurrentStep)
+                if (this.FullEvent.Count() - 1 == CurrentStep)
                 {
                     EventRunning = false;
                     Player.Frozen = false;
@@ -84,10 +84,11 @@ namespace Prologue
 
         private void LoadAction()
         {
-            this.CurrentAction = this.FullEvent[CurrentStep];
-            Console.WriteLine(CurrentAction);
-            WaitToFinish = this.CurrentAction["Wait"];
-            this.CurrentEventType = CurrentAction["Type"];
+            this.CurrentAction = (JObject)this.FullEvent[CurrentStep];
+            //Console.WriteLine(CurrentAction);
+            WaitToFinish = (bool)this.CurrentAction["Wait"];
+            this.CurrentEventType = (int)CurrentAction["Type"];
+            //this.CurrentEventType = 4;
 
             switch (this.CurrentEventType)
             {
@@ -132,8 +133,8 @@ namespace Prologue
 
         private void SpeakAction()
         {
-            string _name = this.CurrentAction["Speaker"];
-            string _text = this.CurrentAction["Text"];
+            string _name = (string)this.CurrentAction["Speaker"];
+            string _text = (string)this.CurrentAction["Text"];
 
 
 
@@ -143,8 +144,8 @@ namespace Prologue
         private void Question()
         {
 
-            string _speaker = this.CurrentAction["Speaker"];
-            string _text = this.CurrentAction["Text"];
+            string _speaker = (string)this.CurrentAction["Speaker"];
+            string _text = (string)this.CurrentAction["Text"];
 
             var _answers = this.CurrentAction["Answers"];
             List<string> _answerslist = new List<string>();
@@ -158,40 +159,41 @@ namespace Prologue
 
         private void LoadNPC()
         {
-            string _NPC = this.CurrentAction["NPCname"];
-            int _XLocation = this.CurrentAction["Location"]["X"];
-            int _YLocation = this.CurrentAction["Location"]["Y"];
+            string _NPC = (string)this.CurrentAction["NPCname"];
+            int _XLocation = (int)this.CurrentAction["Location"]["X"];
+            int _YLocation = (int)this.CurrentAction["Location"]["Y"];
 
             NPC.NPClist.Add(new NPC(_XLocation, _YLocation, _NPC, Game1.FrontSpriteBatch, Game1.prologueContent));
+            //NPC.NPClist.Add(new NPC(3, 4, "Mathijs", Game1.FrontSpriteBatch, Game1.prologueContent));
         }
 
         private void CreateEventZone()
         {
-            int _EventZoneID = this.CurrentAction["EventZone"];
+            int _EventZoneID = (int)this.CurrentAction["EventZone"];
 
             EventZone.EventZoneList.Add(new EventZone(_EventZoneID));
         }
 
         private void DeleteEventZone()
         {
-            int _EventZoneID = this.CurrentAction["EventZone"];
+            int _EventZoneID = (int)this.CurrentAction["EventZone"];
             
             EventZone.DeleteEventZone(_EventZoneID);
         }
 
         private void RemoveNPC()
         {
-            string _Name = this.CurrentAction["NPCname"];
+            string _Name = (string)this.CurrentAction["NPCname"];
 
             NPC.RemoveNPC(_Name);
         }
 
         private void WalkNPC()
         {
-            string _Name = this.CurrentAction["NPCname"];
-            int _x = this.CurrentAction["Goal"]["X"];
-            int _y = this.CurrentAction["Goal"]["Y"];
-            bool _wait = this.CurrentAction["Wait"];
+            string _Name = (string)this.CurrentAction["NPCname"];
+            int _x = (int)this.CurrentAction["Goal"]["X"];
+            int _y = (int)this.CurrentAction["Goal"]["Y"];
+            bool _wait = (bool)this.CurrentAction["Wait"];
 
             //NPC.NPCwalk(Tuple.Create(_x,_y ), _Name,_wait);
             var npc = NPC.NPClist.Find(x => x.Name == _Name);
@@ -200,9 +202,9 @@ namespace Prologue
 
         private void WalkPlayer()
         {
-            int _x = this.CurrentAction["Goal"]["X"];
-            int _y = this.CurrentAction["Goal"]["Y"];
-            bool _wait = this.CurrentAction["Wait"];
+            int _x = (int)this.CurrentAction["Goal"]["X"];
+            int _y = (int)this.CurrentAction["Goal"]["Y"];
+            bool _wait = (bool)this.CurrentAction["Wait"];
 
             Player.PlayerInitializeAutoWalk(Tuple.Create(_x, _y), _wait);
         }
