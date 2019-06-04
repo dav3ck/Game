@@ -153,7 +153,7 @@ namespace Prologue
                 _answerslist.Add(x);
             }
 
-            Textbox.TextBoxes.Add(new QuestionBox(_text, "Event", _answerslist));
+            Textbox.TextBoxes.Add(new QuestionBox(_text, "Event", _answerslist, _speaker));
         }
 
         private void LoadNPC()

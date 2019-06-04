@@ -85,8 +85,9 @@ namespace Prologue
             npc1 = new NPC(4, 12, "Mathijs", FrontSpriteBatch, prologueContent);
 
             SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Textbox_SpriteSheet"));
+            Textbox.LoadTextBoxData();
 
-        Vector2 Location = new Vector2(100, 100);
+            Vector2 Location = new Vector2(100, 100);
             //Textbox.TextBoxes.Add(new InformationTextBox( "HALLO HOE GAAT ET ERMEE@ Persoonlijk gaat het wel redelijk met mij, de bedoeling van deze zin is is dat ie tering lang word zodat hij gesplit moet worden@ Maar.. Maar@ Ohhnee@stut@stut@stutterrr@Jahoor@volgende pagina aub dankuwel@", 600, 150, FrontSpriteBatch, prologueContent));
 
             //TestObject = new Objects(7, 7, 1, FrontSpriteBatch, prologueContent);
@@ -245,7 +246,7 @@ namespace Prologue
                 Textbox.Draw();
             }
 
-            SpriteSheet.screenDraw("Textbox_SpriteSheet", 0, 1, new Vector2(100, 100), FrontSpriteBatch);
+            //SpriteSheet.screenDraw("Textbox_SpriteSheet", 0, 1, new Vector2(100, 100), FrontSpriteBatch);
 
             FrontSpriteBatch.End();
 

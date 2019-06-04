@@ -97,7 +97,7 @@ namespace Prologue
         public void Draw()
         {
             FrontSpriteBatch.Draw(NPCimg, new Rectangle((int)(this.ImageCordX - Screen.CameraX), (int)(this.ImageCordY - Screen.CameraY), (int)this.Width, (int)this.Height), Color.White);
-            FrontSpriteBatch.Draw(Game1.prologueContent.Tile1, new Rectangle((int)(Hitbox.X - Screen.CameraX), (int)(Hitbox.Y - Screen.CameraY), (int)this.HitboxSize, (int)this.HitboxSize), Color.Red);
+            FrontSpriteBatch.Draw(Game1.prologueContent.Testbox_Sprite, new Rectangle((int)(Hitbox.X - Screen.CameraX), (int)(Hitbox.Y - Screen.CameraY), (int)this.HitboxSize, (int)this.HitboxSize), Color.Red);
         }
 
         private void Update()

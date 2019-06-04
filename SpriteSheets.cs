@@ -67,7 +67,7 @@ namespace Prologue
             LoadedSpriteSheets.Remove(LoadedSpriteSheets.Find(x => x.Name == _spriteSheetName));
         }
 
-        public static void screenDraw(string _spriteSheet, int  Row, int Frame, Vector2 Location, SpriteBatch _spriteBatch)
+        public static void screenDraw(string _spriteSheet, int  Row, int Frame, Vector2 Location, SpriteBatch _spriteBatch,int _size)
         {
             SpriteSheet spriteSheet = LoadedSpriteSheets.Find(x => x.Name == _spriteSheet);
             if (spriteSheet == null)
@@ -80,7 +80,7 @@ namespace Prologue
 
             //Console.WriteLine();
 
-            _spriteBatch.Draw(spriteSheet.SpritesheetImg, new Rectangle((int)Location.X, (int)Location.Y,(int)Screen.GridSize,(int)Screen.GridSize), source, Color.White);
+            _spriteBatch.Draw(spriteSheet.SpritesheetImg, new Rectangle((int)Location.X, (int)Location.Y,_size,_size), source, Color.White);
             //_spriteBatch.Draw(Game1.prologueContent.imgPlayer, new Rectangle((int)Location.X, (int)Location.Y, (int)Screen.GridSize, (int)Screen.GridSize), Color.White);
         }
     }
