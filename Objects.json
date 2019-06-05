@@ -6,7 +6,27 @@
       "Texture": "Tile1",
       "Solid": true,
       "CanInteract": true,
-      "Information": "This is a test Object, Used for testing,This is a test@ Object, Used@ for testing"
+      "Information": "Dit is een duur, Textbox hier nog een beetje geglitched maar easy fix",
+      "EventID": 0
+    },
+    {
+      "ID": 2,
+      "Name": "TestObject_2",
+      "Texture": "Tile1",
+      "Solid": true,
+      "CanInteract": true,
+      "Information": "This is a test Object, Used for testing,This is a test@ Object, Used@ for testing",
+      "EventID": 1
+    },
+    {
+      "ID": 3,
+      "Name": "TestObject_3",
+      "Texture": "Tile1",
+      "Solid": true,
+      "CanInteract": true,
+      "Information": "Door is already open, ja alle tekstboxen die uit een Object komen werken nog niet helemaal lekker ...",
+      "EventID": 0
     }
+
   ]
 }

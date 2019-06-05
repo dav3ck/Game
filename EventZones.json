@@ -2,7 +2,7 @@
   "EventZones": [
     {
       "ID": 1,
-      "YPosition": 6,
+      "YPosition": 15,
       "LoadEvent": 2,
       "SingleUse":  true
     }

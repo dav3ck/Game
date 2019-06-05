@@ -34,6 +34,7 @@ namespace Prologue
         public Autowalker(string _name, List<Tuple<int,int>> _path, Tuple<float,float> _currentcords, Tuple<int,int> _speed, bool _eventwait)
         {
 
+
             this.Path = _path;
             this.Name = _name;
             this.CurrentCords = _currentcords;
@@ -47,6 +48,9 @@ namespace Prologue
             this.Goal = Path[Step];
 
             Autowalker.AutowalkerList.Add(this);
+
+            Console.WriteLine(AutowalkerList.Count);
+
 
             //WalkDirection(this.CurrentPosition, Goal);
             CalculateWalk();
@@ -174,6 +178,17 @@ namespace Prologue
         public static void DeleteAutoWalker()
         {
             Autowalker.AutowalkerList.RemoveAll(x => x.Finished == true);
+        }
+
+        public static void ManualDeleteAutoWalker(Autowalker x)
+        {
+            try
+            {
+                Autowalker.AutowalkerList.Remove(x);
+            }
+            catch (Exception){
+                Console.WriteLine("GAAT FOUT");
+            }
         }
 
         public static bool CalculateFaceDirection(Tuple<float,float> Momentum)

@@ -6,21 +6,75 @@
       "Order": [
         {
           "Type": 1,
-          "Text": "GHELLLOOOO@ Ik ga deze zin even extra lang maken@ om te kijken of ie het nou doet of niet@ LOLOLOLOLOL@LOLOLOLOL@OLOL TWEEDE PAGE TWEEDE PAG GAPAPGPAGAGP",
-          "Speaker": "David",
-          "Wait": true
-        },
-        {
-          "Type": 2,
-          "Text": "Whaaaat too doo with lifeeeeeeee@ Ohwel@ ik@ik@@ik@ik",
+          "Text": "Processing Awesomeness@ ... @ ... @Theres a bunch of awesomeness here@ this might take a while@ (also code very laggy)",
+          "Speaker": "Computer",
           "Wait": true
         },
         {
           "Type": 3,
-          "Text": "Gaat @dit@ in @een @keer werken??? OOK ALS WE VRAAG VEEEEL LANGER IS??? PLEASEEEE WORK WORKWOKRKWORK",
-          "Speaker": "David",
-          "Answers": [ "Nee", "Mischien keep praying, Hopelijk kan hij de tekst ook automatisch splitten, dat zou echt super chill zijn. Zou dit al lang genoeg zijn??", "Natuurlijk, Davy is geniuus" ],
+          "Text": "Processing Complete!@ Do u wish to open the door?",
+          "Speaker": "Computer",
+          "Answers": [ "Ja", "Nee", "Holy shit, de game heeft werkende**** questionboxes Epissh!" ],
           "Wait": true
+        },
+        {
+          "Type": 13,
+          "Objects": [
+            [ 19, 9 ],
+            [ 20, 9 ],
+            [ 21, 9 ],
+            [ 19, 12 ]
+          ],
+          "Wait": false
+        },
+        {
+          "Type": 14,
+          "Objects": [
+            [ 19, 12, 3 ]
+          ],
+          "Wait": false
+        },
+        {
+          "Type": 12,
+          "Goal": {
+            "x": 0,
+            "y": -8
+          },
+          "Speed": 3,
+          "Return": false,
+          "Wait": false
+        },
+        {
+          "Type": 10,
+          "Goal": {
+            "X": 20,
+            "Y": 7
+          },
+          "Wait": false
+        },
+        {
+          "Type": 11,
+          "NPCname": "Mathijs",
+          "Goal": {
+            "X": 21,
+            "Y": 7
+          },
+          "Wait": true
+        },
+        {
+          "Type": 1,
+          "Text": "Dit heb je toch weer is mooi ingeprogrammeerd",
+          "Speaker": "Mathijs",
+          "Wait": true
+        },
+        {
+          "Type": 2,
+          "Text": "En zo kwam de epishe fanfic teneinde",
+          "Wait": true
+        },
+        {
+          "Type": 15,
+          "Wait":  false
         }
       ]
     },
@@ -30,21 +84,23 @@
       "AmountofItems": 1,
       "Order": [
         {
-          "Type": 12,
-          "Goal": {
-            "x": 0,
-            "y": -10
-          },
-          "Speed": 5,
-          "Return": false,
+          "Type": 16,
           "Wait": false
         },
         {
-          "Type": 3,
-          "Text": "Gaat @dit@ in @een @keer werken??? OOK ALS WE VRAAG VEEEEL LANGER IS??? PLEASEEEE WORK WORKWOKRKWORK",
-          "Speaker": "David",
-          "Answers": [ "Nee", "Mischien keep praying, Hopelijk kan hij de tekst ook automatisch splitten, dat zou echt super chill zijn. Zou dit al lang genoeg zijn??", "Natuurlijk, Davy is geniuus" ],
+          "Type": 1,
+          "Text": "Well hello there@ and welcome to the epic ... @ EventHandler showcase!!! @ Hij is nog langena niet af @ Maar het werkt zo goed als! @ denk ik.. er zitten nog wel wat errors in maar die zijn te fixen",
+          "Speaker": "Mathijs",
           "Wait": true
+        },
+        {
+          "Type": 11,
+          "NPCname": "Mathijs",
+          "Goal": {
+            "X": 21,
+            "Y": 12
+          },
+          "Wait": false
         }
       ]
     }
@@ -63,7 +119,7 @@
           "Type": 2,
           "Text":  "Whaaaat too doo with lifeeeeeeee@ Ohwel@ ik@ik@@ik@ik"
           "Wait":  true
-        }
+        },
   --------------------------------
         {
           "Type": 3,
@@ -71,7 +127,7 @@
           "Speaker": "David",
           "Answers": [ "Nee", "Mischien keep praying, Hopelijk kan hij de tekst ook automatisch splitten, dat zou echt super chill zijn. Zou dit al lang genoeg zijn??", "Natuurlijk, Davy is geniuus" ],
           "Wait": true
-        }
+        },
   ------------------------------------
          {
           "Type": 4,
@@ -81,7 +137,7 @@
             "Y": 1
           },
           "Wait": false
-        }
+        },
     -------------------------------------
         {
           "Type": 11,
@@ -92,5 +148,36 @@
           },
           "Wait": false
         }, 
+  ------------------------------------------
+          {
+          "Type": 12,
+          "Goal": {
+            "x": 0,
+            "y": -10
+          },
+          "Speed": 5,
+          "Return": false,
+          "Wait": false
+        },
+----------------------------------
+              {
+          "Type": 13,
+          "Objects": [
+            [ 3, 6 ],
+            [ 4, 8 ],
+            [ 3, 10 ]
+          ],
+          "Wait":  false
+        },
+  --------------------------------
+          {
+          "Type": 14,
+          "Objects": [
+            [ 3, 6, 1 ],
+            [ 4, 8, 1 ],
+            [ 3, 10, 1 ],
+          ],
+          "Wait": false
+        },
 
 */

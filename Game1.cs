@@ -82,8 +82,8 @@ namespace Prologue
             Console.WriteLine("GRIDSIZE IS " + Screen.GridSize);
 
             map1 = new Map(prologueContent, spriteBatch);
-            player = new Player(3, 4, FrontSpriteBatch, prologueContent, Map.Tilelist);
-            //npc1 = new NPC(4, 12, "Mathijs", FrontSpriteBatch, prologueContent);
+            player = new Player(20, 17, FrontSpriteBatch, prologueContent, Map.Tilelist);
+            npc1 = new NPC(21, 19, "Mathijs", FrontSpriteBatch, prologueContent);
 
             SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Textbox_SpriteSheet"));
             Textbox.LoadTextBoxData();
@@ -158,16 +158,34 @@ namespace Prologue
             }
             if(newKeyboardState.IsKeyDown(Keys.X) && !oldKeyboardState.IsKeyDown(Keys.X))
             {
-                List<Tuple<int,int>> TestPath = Utility.GeneratePath(Tuple.Create(1,1), Tuple.Create(50,50));
+                /*List<Tuple<int,int>> TestPath = Utility.GeneratePath(Tuple.Create(1,1), Tuple.Create(50,50));
                 foreach( Tuple<int,int> z in TestPath)
                 {
                     Console.WriteLine(z);
-                }
+                }*/
+
+                NPC.ToggleFollow("Mathijs");
+
+                /*
+                List<Tuple<int, int>> input = new List<Tuple<int, int>>
+                {
+                    Tuple.Create(3, 6), Tuple.Create(4, 8), Tuple.Create(3, 10)
+                };
+
+                Objects.RemoveObj(input); */
             }
             if (newKeyboardState.IsKeyDown(Keys.E) && !oldKeyboardState.IsKeyDown(Keys.E))
             {
                 Console.WriteLine("??????????????");
                 EventHandler.EventList.Add( new EventHandler(1));
+            }
+            if (newKeyboardState.IsKeyDown(Keys.Space) && !oldKeyboardState.IsKeyDown(Keys.Space))
+            {
+                if(Player.Frozen != true)
+                {
+                    Objects obj = Objects.ObjectList.Find(x => x.CanInteract == true);
+                    if (obj != null) { obj.Interact(); }
+                }
             }
 
 
@@ -175,14 +193,14 @@ namespace Prologue
 
 
 
-            //Updating of all the classes, This is a temperary Test setup
+                //Updating of all the classes, This is a temperary Test setup
 
-            /* foreach(var _npc in NPC.NPClist)
-             {
-                 _npc.Update();
-             } */
+                /* foreach(var _npc in NPC.NPClist)
+                 {
+                     _npc.Update();
+                 } */
 
-            if (Autowalker.AutowalkerList.Any())
+                if (Autowalker.AutowalkerList.Any())
             {
                 foreach (var autowalker in Autowalker.AutowalkerList)
                 {

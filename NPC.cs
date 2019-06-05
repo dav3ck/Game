@@ -41,6 +41,9 @@ namespace Prologue
         private SpriteBatch FrontSpriteBatch;
         PrologueContent prologueContent { get; set; }
         public string Name { get; set; }
+        public bool Follow { get; set; }
+
+        private Autowalker Autowalk { get; set; }
 
         static public List<NPC> NPClist = new List<NPC>();
 
@@ -110,8 +113,15 @@ namespace Prologue
             this.Xtile = Tilecords.Item1;
             this.Ytile = Tilecords.Item2;
 
-
             this.Hitbox = Player.GetRectangle(this.CenterCordsX, this.CenterCordsY, (int)this.HitboxSize);
+
+            /*
+            if (this.Follow)
+            {
+
+                List<Tuple<int, int>> _path = Utility.GeneratePath(Tilecords, Player.Player1.GetPrevTile());
+                Autowalk = new Autowalker(this.Name, _path, Tuple.Create(CenterCordsX + (this.HitboxHalf), CenterCordsY - (this.HitboxHalf)), Tuple.Create(this.speed, (int)(this.speed * this.Vertical_Horizontal_Speed)), false);
+            } */
         }
 
         public static void WalkNPC(string _name, Tuple<int,int> Momentum)
@@ -129,9 +139,16 @@ namespace Prologue
             Tuple<int, int> CurrentPosition = Screen.GridCords(CenterCordsX,CenterCordsY);
             List<Tuple<int, int>> _path = Utility.GeneratePath(CurrentPosition, Goal);
 
-            Autowalker.AutowalkerList.Add(new Autowalker(this.Name, _path, Tuple.Create(CenterCordsX + (this.HitboxHalf),CenterCordsY - (this.HitboxHalf)), Tuple.Create(this.speed,(int)( this.speed * this.Vertical_Horizontal_Speed)), _wait));
+            Autowalk = new Autowalker(this.Name, _path, Tuple.Create(CenterCordsX + (this.HitboxHalf),CenterCordsY - (this.HitboxHalf)), Tuple.Create(this.speed,(int)( this.speed * this.Vertical_Horizontal_Speed)), _wait);
         }
 
+        public void Follower()
+        {
+            Autowalker.ManualDeleteAutoWalker(Autowalk);
+
+            List<Tuple<int, int>> _path = Utility.GeneratePath(Tuple.Create(this.Xtile,this.Ytile), Player.Player1.GetPrevTile());
+            Autowalk = new Autowalker(this.Name, _path, Tuple.Create(CenterCordsX + (this.HitboxHalf), CenterCordsY - (this.HitboxHalf)), Tuple.Create(this.speed, (int)(this.speed * this.Vertical_Horizontal_Speed)), false);
+        }
 
         public static void RemoveNPC(string _Name)
         {
@@ -155,6 +172,19 @@ namespace Prologue
         public Tuple<int,int> GetNPCCords()
         {
             return (Tuple.Create(this.CenterCordsX, this.CenterCordsY));
+        }
+
+        public static void ToggleFollow(string _name)
+        {
+            NPC npc = NPC.NPClist.Find(x => x.Name == _name);
+            if (npc == null)
+            {
+                Console.WriteLine("Invalid Name!");
+                return;
+            }
+
+            Player.Player1.NoNPCIntersect = !Player.Player1.NoNPCIntersect;
+            npc.Follow = !npc.Follow;
         }
 
     }

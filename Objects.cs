@@ -26,6 +26,7 @@ namespace Prologue
 
         public string Information { get; set; }
         public string Name { get; set; }
+        public int EventID { get; set; }
 
         public SpriteBatch FrontSpriteBatch { get; set; }
         public PrologueContent prologueContent { get; set; }
@@ -39,6 +40,7 @@ namespace Prologue
 
         public Objects(int _Xtile, int _Ytile, int ID)
         {
+
             this.Xtile = _Xtile;
             this.Ytile = _Ytile;
 
@@ -58,7 +60,7 @@ namespace Prologue
                 SolidTile.AllSolidTiles.Add(new SolidTile(Tuple.Create(Xtile, Ytile), Chunck));
             }
 
-            ObjectList.Add(this);
+            //ObjectList.Add(this);
         }
 
         private void LoadObjectData(int ID)
@@ -81,9 +83,9 @@ namespace Prologue
                         this.CanInteract = (bool)item["CanInteract"];
                         this.Information = item["Information"].ToString();
                         this.Objectimg = (Texture2D)prologueContent.GetType().GetProperty(item["Texture"].ToString()).GetValue(prologueContent);
+                        this.EventID = (int)item["EventID"];
                     }
                 }
-
             }
             catch (Exception)
             {
@@ -130,21 +132,57 @@ namespace Prologue
 
         public void Interact()
         {
-            Textbox.TextBoxes.Add( new SpeechTextbox(this.Information, "Object" ,"Me"));
+            if (EventID != 0)
+            {
+                EventHandler.EventList.Add(new EventHandler(EventID));
+            }
+            else
+            {
+                Textbox.TextBoxes.Add(new InformationTextBox(this.Information, "Object"));
+            }
         }
 
+        public static void RemoveObj(List<Tuple<int,int>> _ObjectTiles)
+        {
+            /*List<Objects> _RemoveObjects = new List<Objects>();
 
+            foreach (Tuple<int,int> y in _ObjectTiles)
+            {
+                Objects _object = Objects.ObjectList.Find(x => x.Xtile == y.Item1 && x.Ytile == y.Item2);
+                if (_object != null)
+                {
+                    _RemoveObjects.Add(_object);
+                }
+            } */
+
+            /*foreach (var z in _RemoveObjects)
+            {
+                Objects.ObjectList.Remove(z);
+            }*/
+
+            /*List<SolidTile> _temp = new List<SolidTile>();
+
+            foreach(var z in _RemoveObjects)
+            {
+                _temp = SolidTile.AllSolidTiles.FindAll(x => x.Cords.Equals(Tuple.Create(z.Xtile, z.Ytile)));
+                _temp.ForEach(x => SolidTile.AllSolidTiles.Remove(x));
+            } */
+
+            _ObjectTiles.ForEach(y => Objects.ObjectList.Remove(Objects.ObjectList.Find(x => x.Xtile == y.Item1 && x.Ytile == y.Item2)));
+            _ObjectTiles.ForEach(y => SolidTile.AllSolidTiles.Remove(SolidTile.AllSolidTiles.Find(x => x.Cords.Equals(y))));
+
+            Player.Player1.ChunckUpdate();
+        }
+
+        public static void CreateObj(List<int[]> _objects)
+        {
+             _objects.ForEach(x => Objects.ObjectList.Add(new Objects(x[0], x[1], x[2])));
+            Player.Player1.ChunckUpdate();
+        }
     }
+
 
     //Eventually certain Objects can do Certain things, So I made the main object class with properties all objects share, and then wil have inheritand classes for the special features, Like a computer that can load
 
-    class NormalObject : Objects
-    {
-        public NormalObject(int _Xtile, int _Ytile, int ID) : base(_Xtile, _Ytile, ID)
-        {
-        }
 
-
-
-    }
 }

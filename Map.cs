@@ -34,10 +34,15 @@ namespace Prologue
                 EventZone.EventZoneList.Add(new EventZone(EventID));
             }
 
+            
             Objects.ObjectList.Add(new Objects(7, 7, 1));
             Objects.ObjectList.Add(new Objects(3, 6, 1));
             Objects.ObjectList.Add(new Objects(4, 8, 1));
             Objects.ObjectList.Add(new Objects(3, 10, 1));
+            Objects.ObjectList.Add(new Objects(19, 9, 1));
+            Objects.ObjectList.Add(new Objects(20, 9, 1));
+            Objects.ObjectList.Add(new Objects(21, 9, 1));
+            Objects.ObjectList.Add(new Objects(19, 12, 2));
 
 
             MapWidth = Grid.GetLength(1);

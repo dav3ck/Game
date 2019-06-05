@@ -54,6 +54,11 @@ namespace Prologue
 
         public static Player Player1 {get;set;}
 
+        private Autowalker Autowalk { get; set; }
+        public Tuple<int, int> PrevTile { get; set; }
+
+        public bool NoNPCIntersect { get; set; }
+
 
         public Player(int _Xtile, int _Ytile, SpriteBatch FrontSpriteBatch, PrologueContent prologueContent, List<Tiles> Tilelist)
         {
@@ -212,7 +217,10 @@ namespace Prologue
             foreach(NPC x in NPC.NPClist)
             {
                 //Console.WriteLine("NPC hitbox " + x.Hitbox.Location + " - Size " + x.Hitbox.Size);
-
+                if (NoNPCIntersect)
+                {
+                    break;
+                }
                 //Console.WriteLine(NorthWest + " " + NorthEast + " " + SouthEast + " " + SouthWest);
 
                 if (x.Hitbox.Contains(NorthWest.Item1,NorthWest.Item2) || x.Hitbox.Contains(NorthEast.Item1, NorthEast.Item2) || x.Hitbox.Contains(SouthEast.Item1, SouthEast.Item2) || x.Hitbox.Contains(SouthWest.Item1, SouthWest.Item2))
@@ -233,8 +241,23 @@ namespace Prologue
 
             Tuple<int, int> GridCords = Screen.GridCords(this.CenterCordsX, this.CenterCordsY);
 
-            this.XTile = GridCords.Item1;
-            this.YTile = GridCords.Item2;
+            if(XTile != GridCords.Item1 || YTile != GridCords.Item2)
+            {
+                Console.WriteLine(GridCords);
+                PrevTile = Tuple.Create(XTile, YTile);
+
+                this.XTile = GridCords.Item1;
+                this.YTile = GridCords.Item2;
+
+                foreach (NPC x in NPC.NPClist)
+                {
+                    if (x.Follow)
+                    {
+                        x.Follower();
+                    }
+                }
+
+            }
 
             int Cur_Chunck = Screen.CurrentChunck(this.YTile);
 
@@ -254,6 +277,8 @@ namespace Prologue
 
             this.ImageCordsX = (int)(this.CenterCordsX - this.Width / 2);
             this.ImageCordsY = (int)(this.CenterCordsY + (this.HitboxHalf) - this.Height);
+
+
 
             foreach (Objects x in SolidTile.LoadedObjects)
             {
@@ -352,6 +377,11 @@ namespace Prologue
             return Tuple.Create(this.CenterCordsX, Player1.CenterCordsY);
         }
 
+        public Tuple<int,int> GetPrevTile()
+        {
+            return this.PrevTile;
+        }
+
         public static void FreezePlayer(bool x) // FROZEN IS STATIC VARIABLE NIET NETJES!!!!!
         {
             Frozen = x;
@@ -362,7 +392,7 @@ namespace Prologue
             Tuple<int, int> CurrentPosition = Screen.GridCords(Player1.CenterCordsX, Player1.CenterCordsY);
             Console.WriteLine("TEJFKJFLKJ  " + CurrentPosition);
             List<Tuple<int,int>> _path = Utility.GeneratePath(CurrentPosition, _goal);
-            Autowalker.AutowalkerList.Add(new Autowalker("Player", _path, Tuple.Create((float)Player1.CenterCordsX, (float)Player1.CenterCordsY), Tuple.Create(Player1.Speed, (int)(Player1.Speed * Player1.Vertical_Horizontal_Speed)), _wait));
+            Player1.Autowalk = new Autowalker("Player", _path, Tuple.Create((float)Player1.CenterCordsX, (float)Player1.CenterCordsY), Tuple.Create(Player1.Speed, (int)(Player1.Speed * Player1.Vertical_Horizontal_Speed)), _wait);
         }
 
     }

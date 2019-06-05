@@ -3,8 +3,8 @@
   "NPC_ID": 1,
   "Texture": "imgPlayer",
   "Scale": 5,
-  "Speed": 2,
-  "Vertical_Horizontal_Speed": 0.8
+  "Speed": 8,
+  "Vertical_Horizontal_Speed": 0.5
   
 
 

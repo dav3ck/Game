@@ -41,6 +41,7 @@ namespace Prologue
         {
             var Json = File.ReadAllText("C:/Users/david/source/repos/Prologue/Prologue/Events.json");
 
+
             try
             {
                 var jObject = JObject.Parse(Json);
@@ -126,14 +127,30 @@ namespace Prologue
                 case 12: // Move Camera
                     MoveCamera();
                     break;
+                case 13: // Remove Objects
+                    RemoveObj();
+                    break;
+                case 14: // Create Objects
+                    CreateObj();
+                    break;
+                case 15: //Lock cam back on player
+                    LockCamPlayer();
+                    break;
+                case 16: // Enable/Disable Autofollow
+                    AutoFollow();
+                    break;
             }
 
             if (WaitToFinish == false)
             {
                 Continue = true;
-                Update();
+                //Update();
             }
         }
+
+
+// ---------------------------------------------------------------------
+
 
         private void SpeakAction()
         {
@@ -228,6 +245,49 @@ namespace Prologue
 
             Camera.InitializeCinematic(_goal, _speed, _return, "Event");
         }
+
+        private void RemoveObj()
+        {
+            var _objects = this.CurrentAction["Objects"];
+
+            List<Tuple<int, int>> _TupleList = new List<Tuple<int, int>>();
+            foreach (var x in _objects)
+            {
+                _TupleList.Add(Tuple.Create((int)x[0], (int)x[1]));
+            }
+
+            Objects.RemoveObj(_TupleList);
+        }
+
+        private void CreateObj()
+        {
+
+            var _objects = this.CurrentAction["Objects"];
+
+            List<int[]> _objectList = new List<int[]>();
+
+            foreach(var x in _objects)
+            {
+                _objectList.Add(new int[] { (int)x[0], (int)x[1], (int)x[2] });
+            }
+            
+            //_objectList.ForEach(x => Console.WriteLine(x[0] + " " + x[1] + " " + x[2]));
+
+            Objects.CreateObj(_objectList);
+        }
+
+        private void LockCamPlayer()
+        {
+            Camera.LockOnPlayer = true;
+        }
+
+        private void AutoFollow()
+        {
+            NPC.ToggleFollow("Mathijs");
+        }
+
+        //--------------------------------------------------------------------------------------
+
 
         public static void EventUpdate()
         {
