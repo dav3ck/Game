@@ -72,6 +72,7 @@ namespace Prologue
             prologueContent = new PrologueContent(Content);
 
             //Some general Setup information
+            Camera.InitializeCamera(new Vector2(0,0), true);
 
             Screen.ScreenWidth = GraphicsDevice.Viewport.Width;
             Screen.ScreenHeight = GraphicsDevice.Viewport.Height;
@@ -204,6 +205,7 @@ namespace Prologue
                 Textbox.Update();
             }
 
+            Camera.Update();
 
             base.Update(gameTime);
 

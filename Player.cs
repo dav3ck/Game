@@ -105,10 +105,11 @@ namespace Prologue
 
         public void Draw()
         {
-            Vector2 ScreenCamera = new Vector2(Screen.CameraX, Screen.CameraY);
+            Tuple<int, int> camera = Camera.GetCameraCords();
+            //Vector2 ScreenCamera = new Vector2(Screen.CameraX, Screen.CameraY);
 
-            FrontSpriteBatch.Draw(imgPlayer, new Rectangle((int)(this.ImageCordsX - Screen.CameraX), (int)(this.ImageCordsY - Screen.CameraY), (int)this.Width, (int)this.Height), Color.White);
-            FrontSpriteBatch.Draw(Game1.prologueContent.Testbox_Sprite, new Rectangle((int)(Hitbox.X - Screen.CameraX), (int)(Hitbox.Y - Screen.CameraY), (int)this.HitboxSize, (int)this.HitboxSize), Color.Red);
+            FrontSpriteBatch.Draw(imgPlayer, new Rectangle((int)(this.ImageCordsX - camera.Item1), (int)(this.ImageCordsY - camera.Item2), (int)this.Width, (int)this.Height), Color.White);
+            FrontSpriteBatch.Draw(Game1.prologueContent.Testbox_Sprite, new Rectangle((int)(Hitbox.X - camera.Item1), (int)(Hitbox.Y - camera.Item2), (int)this.HitboxSize, (int)this.HitboxSize), Color.Red);
             
         }
 
@@ -246,7 +247,7 @@ namespace Prologue
 
             EventZone.PlayerIntersection(this.YTile);
 
-            Screen.CameraMovement(this.CenterCordsX, this.CenterCordsY);
+            //Screen.CameraMovement(this.CenterCordsX, this.CenterCordsY);
 
             Horizontal_Momentum = 0;
             Vertical_Momentum = 0;
@@ -346,9 +347,14 @@ namespace Prologue
             return true;
         } */
 
-        public Tuple<int, int> GetPlayerCords()
+        public Tuple<int, int> GetPlayerCords() // HIERNAAR KIJKEN
         {
-            return Tuple.Create(this.CenterCordsX, this.CenterCordsY);
+            return Tuple.Create(this.CenterCordsX, Player1.CenterCordsY);
+        }
+
+        public static void FreezePlayer(bool x) // FROZEN IS STATIC VARIABLE NIET NETJES!!!!!
+        {
+            Frozen = x;
         }
 
         public static void PlayerInitializeAutoWalk(Tuple<int,int> _goal, bool _wait)

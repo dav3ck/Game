@@ -11,8 +11,13 @@
           "Wait": true
         },
         {
+          "Type": 2,
+          "Text": "Whaaaat too doo with lifeeeeeeee@ Ohwel@ ik@ik@@ik@ik",
+          "Wait": true
+        },
+        {
           "Type": 3,
-          "Text": "Gaat dit in een keer werken??? OOK ALS WE VRAAG VEEEEL LANGER IS??? PLEASEEEE WORK WORKWOKRKWORK",
+          "Text": "Gaat @dit@ in @een @keer werken??? OOK ALS WE VRAAG VEEEEL LANGER IS??? PLEASEEEE WORK WORKWOKRKWORK",
           "Speaker": "David",
           "Answers": [ "Nee", "Mischien keep praying, Hopelijk kan hij de tekst ook automatisch splitten, dat zou echt super chill zijn. Zou dit al lang genoeg zijn??", "Natuurlijk, Davy is geniuus" ],
           "Wait": true
@@ -25,22 +30,21 @@
       "AmountofItems": 1,
       "Order": [
         {
-          "Type": 4,
-          "NPCname": "Mathijs",
-          "Location": {
-            "X": 3,
-            "Y": 4
+          "Type": 12,
+          "Goal": {
+            "x": 0,
+            "y": -10
           },
+          "Speed": 5,
+          "Return": false,
           "Wait": false
         },
         {
-          "Type": 11,
-          "NPCname": "Mathijs",
-          "Goal": {
-            "X": 6,
-            "Y": 50
-          },
-          "Wait": false
+          "Type": 3,
+          "Text": "Gaat @dit@ in @een @keer werken??? OOK ALS WE VRAAG VEEEEL LANGER IS??? PLEASEEEE WORK WORKWOKRKWORK",
+          "Speaker": "David",
+          "Answers": [ "Nee", "Mischien keep praying, Hopelijk kan hij de tekst ook automatisch splitten, dat zou echt super chill zijn. Zou dit al lang genoeg zijn??", "Natuurlijk, Davy is geniuus" ],
+          "Wait": true
         }
       ]
     }
@@ -48,15 +52,26 @@
 }
 
 /*
+          {
+          "Type": 1,
+          "Text": "GHELLLOOOO@ Ik ga deze zin even extra lang maken@ om te kijken of ie het nou doet of niet@ LOLOLOLOLOL@LOLOLOLOL@OLOL TWEEDE PAGE TWEEDE PAG GAPAPGPAGAGP",
+          "Speaker": "David",
+          "Wait": true
+        },
+  --------------------------------
+         {
+          "Type": 2,
+          "Text":  "Whaaaat too doo with lifeeeeeeee@ Ohwel@ ik@ik@@ik@ik"
+          "Wait":  true
+        }
+  --------------------------------
         {
-          "Type": 11,
-          "NPCname": "Mathijs",
-          "Goal": {
-            "X": 3,
-            "Y": 4
-          },
-          "Wait": false
-        }, 
+          "Type": 3,
+          "Text": "Gaat @dit@ in @een @keer werken??? OOK ALS WE VRAAG VEEEEL LANGER IS??? PLEASEEEE WORK WORKWOKRKWORK",
+          "Speaker": "David",
+          "Answers": [ "Nee", "Mischien keep praying, Hopelijk kan hij de tekst ook automatisch splitten, dat zou echt super chill zijn. Zou dit al lang genoeg zijn??", "Natuurlijk, Davy is geniuus" ],
+          "Wait": true
+        }
   ------------------------------------
          {
           "Type": 4,
@@ -67,5 +82,15 @@
           },
           "Wait": false
         }
+    -------------------------------------
+        {
+          "Type": 11,
+          "NPCname": "Mathijs",
+          "Goal": {
+            "X": 3,
+            "Y": 4
+          },
+          "Wait": false
+        }, 
 
 */

@@ -96,6 +96,7 @@ namespace Prologue
                     SpeakAction();
                     break;
                 case 2: //Thought Textbox
+                    Informationbox();
                     break;
                 case 3: // Question Textbox
                     Question();
@@ -121,6 +122,9 @@ namespace Prologue
                     break;
                 case 11: // NPC walk
                     WalkNPC();
+                    break;
+                case 12: // Move Camera
+                    MoveCamera();
                     break;
             }
 
@@ -155,6 +159,13 @@ namespace Prologue
             }
 
             Textbox.TextBoxes.Add(new QuestionBox(_text, "Event", _answerslist, _speaker));
+        }
+
+        private void Informationbox()
+        {
+            string _text = (string)this.CurrentAction["Text"];
+
+            Textbox.TextBoxes.Add(new InformationTextBox(_text, "Event"));
         }
 
         private void LoadNPC()
@@ -207,6 +218,15 @@ namespace Prologue
             bool _wait = (bool)this.CurrentAction["Wait"];
 
             Player.PlayerInitializeAutoWalk(Tuple.Create(_x, _y), _wait);
+        }
+
+        private void MoveCamera()
+        {
+            Tuple<int, int> _goal = Tuple.Create((int)this.CurrentAction["Goal"]["x"], (int)this.CurrentAction["Goal"]["y"]);
+            int _speed = (int)this.CurrentAction["Speed"];
+            bool _return = (bool)this.CurrentAction["Return"];
+
+            Camera.InitializeCinematic(_goal, _speed, _return, "Event");
         }
 
         public static void EventUpdate()
