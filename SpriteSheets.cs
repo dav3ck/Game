@@ -29,6 +29,11 @@ namespace Prologue
             this.Name = _name;
 
             loadSpriteSheetData();
+
+            if (Animation)
+            {
+                LoadAnimation();
+            }
         }
 
         public void loadSpriteSheetData()
@@ -57,14 +62,11 @@ namespace Prologue
             }
         }
 
-        public static void LoadRowData(string _name, int _row, ref int FrameCount, ref int ItterationTick)
+        public void LoadRowData(string _name, int _row, ref int FrameCount, ref int ItterationTick)
         {
-            SpriteSheet _spriteSheet = SpriteSheet.LoadedSpriteSheets.Find(x => x.Name == _name);
-            if (_spriteSheet == null) { return; }
-
             try
             {
-                JObject Row = (JObject)_spriteSheet.Rows.ElementAt(_row);
+                JObject Row = (JObject)Rows.ElementAt(_row);
                 if (Row == null)
                 {
                     return;
@@ -122,7 +124,14 @@ namespace Prologue
                 return GetSpriteSheet(_spriteSheetName);
             }
             return spriteSheet;
+        }
 
+        public void LoadAnimation()
+        {
+            for(int x = 0; x < Rows.Count(); x++)
+            {
+                AnimationTick _animation = new AnimationTick(Name, x, this);
+            }
         }
     }
 }

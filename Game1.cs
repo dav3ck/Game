@@ -81,9 +81,10 @@ namespace Prologue
 
             Screen.GridSize = Screen.ScreenWidth / Screen.MinGridX;
 
+            SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Test_Animation_SpriteSheet"));
             SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Textbox_SpriteSheet"));
             SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Player_Walk_SpriteSheet"));
-            SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Test_Animation_SpriteSheet"));
+
 
             map1 = new Map(prologueContent, spriteBatch);
             player = new Player(20, 17, FrontSpriteBatch, prologueContent, Map.Tilelist);

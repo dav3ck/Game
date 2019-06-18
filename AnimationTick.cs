@@ -11,41 +11,73 @@ namespace Prologue
         private string SpriteSheetName { get; set; }
         public int Row { get; set; }
         private int Tick { get; set; }
-        public int Itteration { get; set; }
-        private int FrameCount { get; set; }
+        private List<int> Itterations = new List<int>();
 
-        public static int Count = 0;
+        public static int Count = 01;
         public static Random x = new Random();
 
-        public AnimationTick(string _spriteSheetName, int _row)
+        public static List<AnimationTick> AnimationTickList = new List<AnimationTick>();
+
+        public AnimationTick(string _spriteSheetName, int _row, SpriteSheet _spriteSheet)
         {
             int _Tick = 0;
             int _FrameCount = 0;
 
-            SpriteSheet.LoadRowData(_spriteSheetName, _row, ref _FrameCount, ref _Tick);
+            _spriteSheet.LoadRowData(_spriteSheetName,_row, ref _FrameCount, ref _Tick);
 
             SpriteSheetName = _spriteSheetName;
             Row = _row;
             Tick = _Tick;
-            FrameCount = _FrameCount;
-            Itteration = x.Next(FrameCount); ;
+            for(int x = 0; x < _FrameCount; x++)
+            {
+                Itterations.Add(x);
+            }
+
+            AnimationTickList.Add(this);
         }
 
         public void Update()
         {
             if(AnimationTick.Count % Tick == 0)
             {
-                Itteration++;
+                for(int i = 0; i < Itterations.Count(); i++)
+                {
+                    Itterations[i] += 1;
+                    if (Itterations[i] >= Itterations.Count())
+                    {
+                        Itterations[i] = 0;
+                    }
+                }
             }
-            if (Itteration > FrameCount)
+        }
+
+        public int AssignAnimationIndex()
+        {
+           return x.Next(Itterations.Count());
+        }
+
+        public int GetIterationIndexValue(int Index)
+        {
+            return Itterations[Index];
+        }
+
+        public static AnimationTick GetAnimationTick(string _name, int _row)
+        {
+            AnimationTick animationTick = AnimationTickList.Find(x => x.SpriteSheetName == _name && x.Row == _row);
+            if (animationTick == null)
             {
-                Itteration = 0;
-            } 
+                return AnimationTickList.First();
+            }
+            return animationTick;
         }
 
         public static void TickUpdate()
         {
             Count++;
+            foreach(AnimationTick x in AnimationTickList)
+            {
+                x.Update();
+            }
         }
     }
 }

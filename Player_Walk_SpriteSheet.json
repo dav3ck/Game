@@ -7,7 +7,7 @@
     "w": 64,
     "h": 120
   },
-  "Animation": true,
+  "Animation": false,
   "Rows": [
     {
       "RowNum": 1, 

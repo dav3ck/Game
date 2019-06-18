@@ -39,6 +39,7 @@ namespace Prologue
         private AnimationTick Animation { get; set; }
         private bool IsAnimated { get; set; }
         private string SpriteSheetName { get; set; }
+        private int AnimationIndex { get; set; }
 
         //------------------------------------------------------------
 
@@ -65,11 +66,12 @@ namespace Prologue
             }
 
             IsAnimated = SpriteSheet.IsAnimated(SpriteSheet.GetSpriteSheet(SpriteSheetName));
-            Console.WriteLine(IsAnimated);
-            if (IsAnimated)
+            if (IsAnimated == true)
             {
-                Animation = new AnimationTick("Test_Animation_SpriteSheet", 0);
+                Animation = AnimationTick.GetAnimationTick(SpriteSheetName, 0);
+                AnimationIndex = Animation.AssignAnimationIndex();
             }
+            
             //ObjectList.Add(this);
         }
 
@@ -137,15 +139,14 @@ namespace Prologue
 
         public void Draw()
         {
+            int x = 1;
             if (IsAnimated)
             {
-                Animation.Update();
-                SpriteSheet.screenDraw("Test_Animation_SpriteSheet", Animation.Row, Animation.Itteration, new Vector2((int)(this.Xcord - Screen.CameraX), (int)(this.Ycord - Screen.CameraY)), FrontSpriteBatch, (int)Screen.GridSize, (int)Screen.GridSize);
+                x = Animation.GetIterationIndexValue(AnimationIndex);
             }
-            else
-            {
-                SpriteSheet.screenDraw("Test_Animation_SpriteSheet", 0, 1, new Vector2((int)(this.Xcord - Screen.CameraX), (int)(this.Ycord - Screen.CameraY)), FrontSpriteBatch, (int)Screen.GridSize, (int)Screen.GridSize);
-            }
+
+            SpriteSheet.screenDraw("Test_Animation_SpriteSheet", 0, x, new Vector2((int)(this.Xcord - Screen.CameraX), (int)(this.Ycord - Screen.CameraY)), FrontSpriteBatch, (int)Screen.GridSize, (int)Screen.GridSize);
+        
         }
 
         public void Interact()
