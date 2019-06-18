@@ -3,6 +3,7 @@
     {
       "Event": 1,
       "AmountofItems": 2,
+      "FreezePlayer": true,
       "Order": [
         {
           "Type": 1,
@@ -80,6 +81,7 @@
     },
 
     {
+      "FreezePlayer":  false,
       "Event": 2,
       "AmountofItems": 1,
       "Order": [

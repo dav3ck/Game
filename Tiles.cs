@@ -22,7 +22,7 @@ namespace Prologue
         public int ID { get; set; }
         public bool Solid { get; set; }
         public string name { get; set; }
-        public int Chunck { get; set; }
+        public int chunck { get; set; }
 
         public Tuple<int,int> TileCords { get; set; }
 
@@ -39,7 +39,7 @@ namespace Prologue
             this.X = X;
             this.Y = Y;
 
-            this.Chunck = Screen.CurrentChunck(this.Y);
+            this.chunck = Chunck.CurrentChunck(this.Y);
 
             this.Xcord = Xcord;
             this.Ycord = Ycord;
@@ -49,7 +49,7 @@ namespace Prologue
 
             if (this.Solid == true)
             {
-                SolidTile.AllSolidTiles.Add(new SolidTile(this.TileCords, this.Chunck));
+                SolidTile.AllSolidTiles.Add(new SolidTile(this.TileCords, this.chunck));
             }
         }
 

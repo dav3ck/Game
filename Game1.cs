@@ -65,6 +65,8 @@ namespace Prologue
         /// </summary>
         protected override void LoadContent()
         {
+
+
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             FrontSpriteBatch = new SpriteBatch(GraphicsDevice);
@@ -79,13 +81,15 @@ namespace Prologue
 
             Screen.GridSize = Screen.ScreenWidth / Screen.MinGridX;
 
-            Console.WriteLine("GRIDSIZE IS " + Screen.GridSize);
+            SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Textbox_SpriteSheet"));
+            SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Player_Walk_SpriteSheet"));
+            SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Test_Animation_SpriteSheet"));
 
             map1 = new Map(prologueContent, spriteBatch);
             player = new Player(20, 17, FrontSpriteBatch, prologueContent, Map.Tilelist);
+            Console.WriteLine("Items Initialized!");
             npc1 = new NPC(21, 19, "Mathijs", FrontSpriteBatch, prologueContent);
 
-            SpriteSheet.LoadedSpriteSheets.Add(new SpriteSheet("Textbox_SpriteSheet"));
             Textbox.LoadTextBoxData();
 
             Vector2 Location = new Vector2(100, 100);
@@ -158,13 +162,15 @@ namespace Prologue
             }
             if(newKeyboardState.IsKeyDown(Keys.X) && !oldKeyboardState.IsKeyDown(Keys.X))
             {
-                /*List<Tuple<int,int>> TestPath = Utility.GeneratePath(Tuple.Create(1,1), Tuple.Create(50,50));
-                foreach( Tuple<int,int> z in TestPath)
+                List<Tuple<int,int>> TestPath = Utility.GeneratePath(Tuple.Create(1,1), Tuple.Create(256,256));
+                foreach (Tuple<int, int> z in TestPath)
                 {
                     Console.WriteLine(z);
-                }*/
+                } 
 
-                NPC.ToggleFollow("Mathijs");
+                //Console.WriteLine(Utility.GeneratePath(Tuple.Create(0,0),Tuple.Create(256,256)));
+
+                //NPC.ToggleFollow("Mathijs");
 
                 /*
                 List<Tuple<int, int>> input = new List<Tuple<int, int>>
@@ -181,7 +187,7 @@ namespace Prologue
             }
             if (newKeyboardState.IsKeyDown(Keys.Space) && !oldKeyboardState.IsKeyDown(Keys.Space))
             {
-                if(Player.Frozen != true)
+                if(Player.Player1.Frozen != true)
                 {
                     Objects obj = Objects.ObjectList.Find(x => x.CanInteract == true);
                     if (obj != null) { obj.Interact(); }
@@ -222,6 +228,9 @@ namespace Prologue
             {
                 Textbox.Update();
             }
+
+            Player.Player1.TickUpdate();
+            AnimationTick.TickUpdate();
 
             Camera.Update();
 

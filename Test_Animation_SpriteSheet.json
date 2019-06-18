@@ -1,0 +1,34 @@
+{
+  "Name": "Test_Animation_SpriteSheet",
+  "Image": "Test_Animation_SpriteSheet",
+  "Row": 1,
+  "Frames": 3,
+  "size": {
+    "w": 90,
+    "h": 30
+  },
+  "Animation": true,
+  "Rows": [
+    {
+      "Frames": [
+        {
+          "FrameNumber": 1,
+          "Name": "Player_Walk_up_1"
+        },
+        {
+          "FrameNumber": 2,
+          "Name": "Player_Walk_up_2"
+        },
+        {
+          "FrameNumber": 3,
+          "Name": "Player_Walk_up_3"
+        }
+      ],
+      "Information": "TestAnimationTile",
+      "RowNum": 1,
+      "Time": 20
+    }
+    ]
+
+}
+

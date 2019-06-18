@@ -117,7 +117,7 @@ namespace Prologue
 
             if (this.Name == "Player")
             {
-                EntityCords = Player.Player1.GetPlayerCords();
+                EntityCords = Player.GetPlayerCords(Player.Player1);
             }
             else
             {

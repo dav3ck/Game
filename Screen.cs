@@ -14,8 +14,6 @@ namespace Prologue
         static public int MinGridX = 16;
         static public int MinGridY = 9;
 
-        static public int ChunckSize = 16;
-
         static public float GridSize { get; set; }
 
         static public float CameraX { get; set; }
@@ -26,12 +24,6 @@ namespace Prologue
             //Console.WriteLine(GridSize);
             //Console.WriteLine(x * GridSize + " " + y * GridSize);
             return Tuple.Create((int)(x * GridSize), (int)(y * GridSize));
-        }
-
-        static public int CurrentChunck(int gridy)
-        {
-            int _chunck = (int)Math.Ceiling((double)(gridy / ChunckSize));
-            return _chunck;
         }
 
         static public Tuple<int, int> GridCords(float x, float y)

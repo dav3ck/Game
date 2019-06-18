@@ -17,7 +17,7 @@ namespace Prologue
         public int Speed { get; set; }
         public double Vertical_Horizontal_Speed { get; set; }
         public int Scale { get; set; }
-        public static bool Frozen { get; set; }
+        public bool Frozen { get; set; }
         public string Image { get; set; }
 
         public float Width { get; set; }
@@ -26,7 +26,7 @@ namespace Prologue
         public int XTile { get; set; }
         public int YTile { get; set; }
 
-        public int Chunck { get; set; }
+        public int chunck { get; set; }
 
         public List<Tiles> Tilelist { get; set; }
 
@@ -49,15 +49,18 @@ namespace Prologue
         public Texture2D imgPlayer { get; set; }
         public SpriteBatch FrontSpriteBatch;
 
-        public static List<Tiles> LoadedTiles = new List<Tiles>();
-        public static List<Objects> LoadedObjects = new List<Objects>();
-
         public static Player Player1 {get;set;}
 
         private Autowalker Autowalk { get; set; }
         public Tuple<int, int> PrevTile { get; set; }
 
         public bool NoNPCIntersect { get; set; }
+
+        private int AnimationDirection { get; set; }
+        private int AnimationItteration { get; set; }
+        private bool IsMoving { get; set; }
+        private int AnimationCount { get; set; }
+ 
 
 
         public Player(int _Xtile, int _Ytile, SpriteBatch FrontSpriteBatch, PrologueContent prologueContent, List<Tiles> Tilelist)
@@ -69,15 +72,15 @@ namespace Prologue
             this.YTile = _Ytile;
 
             imgPlayer = prologueContent.imgPlayer;
-            this.Width = imgPlayer.Width * this.Scale;
-            this.Height = imgPlayer.Height * this.Scale;
+            this.Width = 16 * this.Scale;
+            this.Height = 30 * this.Scale;
 
             this.CenterCordsX = (int)(this.XTile * Screen.GridSize + Screen.GridSize / 2);
             this.CenterCordsY = (int)(this.YTile * Screen.GridSize + Screen.GridSize / 2);
 
-            this.Chunck = 0;
+            this.chunck = 0;
 
-            ChunckUpdate();
+
 
             this.FrontSpriteBatch = FrontSpriteBatch;
             this.Tilelist = Map.Tilelist;
@@ -89,9 +92,9 @@ namespace Prologue
             this.ImageCordsX = (int)(this.CenterCordsX - this.Width / 2);
             this.ImageCordsY = (int)(this.CenterCordsY + (this.HitboxHalf) - this.Height);
 
-            Update();
-
             Player1 = this;
+            Chunck.Update();
+            Update();
         }
 
         public void LoadJson()
@@ -113,7 +116,9 @@ namespace Prologue
             Tuple<int, int> camera = Camera.GetCameraCords();
             //Vector2 ScreenCamera = new Vector2(Screen.CameraX, Screen.CameraY);
 
-            FrontSpriteBatch.Draw(imgPlayer, new Rectangle((int)(this.ImageCordsX - camera.Item1), (int)(this.ImageCordsY - camera.Item2), (int)this.Width, (int)this.Height), Color.White);
+            SpriteSheet.screenDraw("Player_Walk_SpriteSheet", AnimationDirection, AnimationItteration, new Vector2((int)(this.ImageCordsX - camera.Item1), (int)(this.ImageCordsY - camera.Item2)), FrontSpriteBatch, (int)this.Width, (int)this.Height);
+
+            //FrontSpriteBatch.Draw(imgPlayer, new Rectangle((int)(this.ImageCordsX - camera.Item1), (int)(this.ImageCordsY - camera.Item2), (int)this.Width, (int)this.Height), Color.White);
             FrontSpriteBatch.Draw(Game1.prologueContent.Testbox_Sprite, new Rectangle((int)(Hitbox.X - camera.Item1), (int)(Hitbox.Y - camera.Item2), (int)this.HitboxSize, (int)this.HitboxSize), Color.Red);
             
         }
@@ -135,7 +140,7 @@ namespace Prologue
                 Horizontal_Momentum = Speed; 
             }
 
-            PlayerMoves();
+            //PlayerMoves();
         }
 
         public void VerticalMov(string Direction)
@@ -151,31 +156,35 @@ namespace Prologue
                 Vertical_Momentum = 1 * (float)Speed * (float)Vertical_Horizontal_Speed;
             }
 
-                PlayerMoves();
+                //PlayerMoves();
         }
 
         public void PlayerMoves()
         {
+            IsMoving = true;
+
             int _Xtemp = this.CenterCordsX + (int)Horizontal_Momentum;
             int _Ytemp = this.CenterCordsY + (int)Vertical_Momentum;
+
+            Animation((int)Vertical_Momentum, (int)Horizontal_Momentum);
 
             //THIS ALL WAS USED FOR TURNING THE HITBOXES, DECIDED TO SQUAR HITBOX TO MAKE THINGS EASIER WITH ROTATING
 
             //bool _TempRotation = Autowalker.CalculateFaceDirection(Tuple.Create(Horizontal_Momentum, Vertical_Momentum));
 
-           /* bool Canturn = TestHitBoxCollision(GetRectangle(this.CenterCordsX, this.CenterCordsY, _TempRotation)); // TEST whether or not player can turn,
+            /* bool Canturn = TestHitBoxCollision(GetRectangle(this.CenterCordsX, this.CenterCordsY, _TempRotation)); // TEST whether or not player can turn,
 
-            if (Canturn == true)
-            {
-                if(this.Rotation == false && Vertical_Momentum != 0)
-                {
-                    this.Rotation = false;
-                }
-                else
-                {
-                    this.Rotation = _TempRotation;
-                }
-            }*/
+             if (Canturn == true)
+             {
+                 if(this.Rotation == false && Vertical_Momentum != 0)
+                 {
+                     this.Rotation = false;
+                 }
+                 else
+                 {
+                     this.Rotation = _TempRotation;
+                 }
+             }*/
 
 
 
@@ -183,9 +192,9 @@ namespace Prologue
             bool CanHorwalk = TestHitBoxCollision(GetRectangle(_Xtemp, this.CenterCordsY,(int)this.HitboxSize)); // TEST whether or not Runs into solid object
             bool CanVerwalk = TestHitBoxCollision(GetRectangle(this.CenterCordsX, _Ytemp,(int)this.HitboxSize));
 
+
             if (CanHorwalk != true) { Horizontal_Momentum = 0; }
             if (CanVerwalk != true) { Vertical_Momentum = 0; }
-
 
             Update();
 
@@ -234,6 +243,7 @@ namespace Prologue
 
         public void Update()
         {
+
             this.CenterCordsX += (int)Horizontal_Momentum;
             this.CenterCordsY += (int)Vertical_Momentum;
 
@@ -259,12 +269,12 @@ namespace Prologue
 
             }
 
-            int Cur_Chunck = Screen.CurrentChunck(this.YTile);
+            int Cur_Chunck = Chunck.CurrentChunck(this.YTile);
 
-            if (this.Chunck != Cur_Chunck)
+            if (this.chunck != Cur_Chunck)
             {
-                this.Chunck = Cur_Chunck;
-                ChunckUpdate();
+                this.chunck = Cur_Chunck;
+                Chunck.Update();
             }
 
 
@@ -288,6 +298,21 @@ namespace Prologue
             Player1 = this;
         }
 
+        public void TickUpdate()
+        {
+            if (Vertical_Momentum != 0 || Horizontal_Momentum != 0)
+            {
+                PlayerMoves();
+            }
+            
+            if (!IsMoving)
+            {
+                AnimationItteration = 0;
+            }
+
+            IsMoving = false;
+        }
+
         public static Rectangle GetRectangle(int _CenterCordX, int _CenterCordY, int _HitboxSize)
         {
             int _HitBoxtopCordsX = (int)(_CenterCordX - _HitboxSize / 2);
@@ -304,20 +329,13 @@ namespace Prologue
 
         public static void MovePlayer(Tuple<int,int> Momentum)
         {
+            Player1.IsMoving = true;
+            Player1.Animation(Momentum.Item2, Momentum.Item1);
+
             Player1.CenterCordsX += Momentum.Item1;
             Player1.CenterCordsY += Momentum.Item2;
 
             Player1.Update();
-        }
-
-        public void ChunckUpdate()
-        {
-            SolidTile.LoadedSolidTiles.Clear();
-            SolidTile.LoadedSolidTiles = SolidTile.AllSolidTiles.FindAll(x => x.Chunck == this.Chunck || x.Chunck == this.Chunck + 1 || x.Chunck == this.Chunck - 1);
-            SolidTile.LoadedObjects.Clear();
-            SolidTile.LoadedObjects = Objects.ObjectList.FindAll(x => x.Chunck == this.Chunck || x.Chunck == this.Chunck + 1 || x.Chunck == this.Chunck - 1);
-            SolidTile.LoadedTiles.Clear();
-            SolidTile.LoadedTiles = Map.Tilelist.FindAll(x => x.Chunck == this.Chunck || x.Chunck == this.Chunck + 1 || x.Chunck == this.Chunck - 1);
         }
 
         /*public bool AllowMovement(Tuple<float,float> cord1, Tuple<float, float> cord2)
@@ -372,9 +390,46 @@ namespace Prologue
             return true;
         } */
 
-        public Tuple<int, int> GetPlayerCords() // HIERNAAR KIJKEN
+        private void Animation(int Vertical_Momentum, int Horizontal_Momentum)
         {
-            return Tuple.Create(this.CenterCordsX, Player1.CenterCordsY);
+            if (Vertical_Momentum > 0)
+            {
+                AnimationDirection = 3;
+            }
+            else if (Vertical_Momentum < 0)
+            {
+                AnimationDirection = 0;
+            }
+            else if (Horizontal_Momentum > 0)
+            {
+                AnimationDirection = 2;
+            }
+            else if (Horizontal_Momentum < 0)
+            {
+                AnimationDirection = 1;
+            }
+
+            AnimationCount++;
+
+            if (AnimationCount % 5 == 0)
+            {
+                AnimationItteration++;
+            }
+
+            if (AnimationItteration > 3)
+            {
+                AnimationItteration = 0;
+            } 
+        }
+
+        public static Tuple<int, int> GetPlayerCords(Player x) // HIERNAAR KIJKEN
+        {
+            return Tuple.Create(x.CenterCordsX, x.CenterCordsY);
+        }
+
+        public static Tuple<int,int> GetPlayerTiles(Player x)
+        {
+            return Tuple.Create(x.XTile, x.YTile);
         }
 
         public Tuple<int,int> GetPrevTile()
@@ -384,7 +439,7 @@ namespace Prologue
 
         public static void FreezePlayer(bool x) // FROZEN IS STATIC VARIABLE NIET NETJES!!!!!
         {
-            Frozen = x;
+            Player1.Frozen = x;
         }
 
         public static void PlayerInitializeAutoWalk(Tuple<int,int> _goal, bool _wait)

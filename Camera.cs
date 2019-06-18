@@ -45,7 +45,7 @@ namespace Prologue
 
         private static void PlayerCenter()
         {
-            Tuple<int, int> PlayerCords = Player.Player1.GetPlayerCords();
+            Tuple<int, int> PlayerCords = Player.GetPlayerCords(Player.Player1);
             Camera.Location = new Vector2(PlayerCords.Item1 - (int)Screen.ScreenWidth / 2, PlayerCords.Item2 - (int)Screen.ScreenHeight / 2);
             /*Camera.Xcord = PlayerCords.Item1 - (int)Screen.ScreenWidth / 2;
             Camera.Ycord = PlayerCords.Item2 - (int)Screen.ScreenHeight / 2;*/

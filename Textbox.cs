@@ -56,7 +56,7 @@ namespace Prologue
         public Textbox(String FullText, string Caller)
         {
 
-            Player.Frozen = true;
+            Player.FreezePlayer(true);
 
             this.Caller = Caller;
             this.FullText = FullText;
@@ -322,7 +322,7 @@ namespace Prologue
                 }
                 else
                 {
-                    Player.Frozen = false;
+                    Player.FreezePlayer(false);
                 }
             }
 

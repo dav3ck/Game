@@ -62,6 +62,7 @@ namespace Prologue
                 }
             }
 
+            Console.WriteLine("STAP 1 COMPLETE");
 
             PathFinderTile Tile = PathFinderTile.PathTiles.Find(x => x.Cords.Equals(StartPosition));
             Tile.On = true;
@@ -94,17 +95,21 @@ namespace Prologue
 
             int Itteration = 0;
 
+            Console.WriteLine("Stap 2 complete!");
+
             while (!PathFinderTile.PathTiles.Any(x => x.Cords.Equals(Goal) && x.On == true))
             {
-                if (Itteration > 1)
+                if (Itteration > 10)
                 {
                     Console.WriteLine("CROSSED MAX ITTERATIONS --------------");
                     return ImpossiblePath(StartPosition, Goal);
                 }
                 PathFinderTile.CheckForPath();
+                Console.WriteLine("Stap 3 in Process!");
                 Itteration++;
             }
 
+            Console.WriteLine("Stap 3 Complete!");
 
             PathFinderTile PathTile = PathFinderTile.PathTiles.Find(x => x.Cords.Equals(Goal));
             Path.Add(PathTile.Cords);
@@ -233,25 +238,47 @@ namespace Prologue
 
         public static void CheckForPath()
         {
+            int z = 0;
             foreach (PathFinderTile _Tile in PathTiles)
             {
-                if (_Tile.On == true && _Tile.Tested == false)
+                if (_Tile.On != true && PathTiles.Any(x => (x.Cords.Equals(_Tile.South) || x.Cords.Equals(_Tile.North) || x.Cords.Equals(_Tile.East) || x.Cords.Equals(_Tile.West)) && x.On == true));
                 {
-                    List<PathFinderTile> _TempList = new List<PathFinderTile>(PathTiles.FindAll(x => x.Cords.Equals(_Tile.South) || x.Cords.Equals(_Tile.North) || x.Cords.Equals(_Tile.East) || x.Cords.Equals(_Tile.West)));
+                    PathFinderTile _TempList = PathTiles.Find(x => x.Cords.Equals(_Tile.South) || x.Cords.Equals(_Tile.North) || x.Cords.Equals(_Tile.East) || x.Cords.Equals(_Tile.West));
 
-                    foreach (PathFinderTile x in _TempList)
+                    //_Tile.Tested = true;
+
+                    _Tile.On = true;
+                    _Tile.Carrier = _TempList.Cords;
+
+                    z++;
+
+                    if (z % 1000 == 0)
                     {
-                        _Tile.Tested = true;
-
-                        if (x.On != true)
-                        {
-                            x.On = true;
-                            x.Carrier = _Tile.Cords;
-                        }
+                        Console.WriteLine(z);
                     }
                 }
             }
         
+        }
+
+        public void Update()
+        {
+            PathFinderTile y = PathTiles.Find(x => (x.Cords.Equals(this.South) || x.Cords.Equals(this.North) || x.Cords.Equals(this.East) || x.Cords.Equals(this.West)) && x.On == true);
+            if ( y != null)
+            {
+                this.On = true;
+                this.Carrier = y.Cords;
+            }
+        }
+
+        public static bool GetOn(Tuple<int,int> cords)
+        {
+            if (PathTiles.Any(x => x.Cords == cords && x.On == true))
+            {
+                return true;
+            }
+
+            return false;
         }
 
 

@@ -16,7 +16,7 @@ namespace Prologue
     {
         public int Xtile { get; set; }
         public int Ytile { get; set; }
-        public int Chunck { get; set; }
+        public int chunck { get; set; }
 
         public float Xcord { get; set; }
         public float Ycord { get; set; }
@@ -36,11 +36,15 @@ namespace Prologue
 
         public static List<Objects> ObjectList = new List<Objects>();
 
+        private AnimationTick Animation { get; set; }
+        private bool IsAnimated { get; set; }
+        private string SpriteSheetName { get; set; }
+
         //------------------------------------------------------------
 
         public Objects(int _Xtile, int _Ytile, int ID)
         {
-
+            SpriteSheetName = "Test_Animation_SpriteSheet";
             this.Xtile = _Xtile;
             this.Ytile = _Ytile;
 
@@ -48,7 +52,7 @@ namespace Prologue
 
             LoadObjectData(ID);
 
-            this.Chunck = Screen.CurrentChunck(this.Ytile);
+            this.chunck = Chunck.CurrentChunck(this.Ytile);
 
             this.FrontSpriteBatch = Game1.FrontSpriteBatch;
             Tuple<int, int> _Screencords = Screen.ScreenCords(this.Xtile, this.Ytile);
@@ -57,9 +61,15 @@ namespace Prologue
 
             if (this.Solid == true)
             {
-                SolidTile.AllSolidTiles.Add(new SolidTile(Tuple.Create(Xtile, Ytile), Chunck));
+                SolidTile.AllSolidTiles.Add(new SolidTile(Tuple.Create(Xtile, Ytile), chunck));
             }
 
+            IsAnimated = SpriteSheet.IsAnimated(SpriteSheet.GetSpriteSheet(SpriteSheetName));
+            Console.WriteLine(IsAnimated);
+            if (IsAnimated)
+            {
+                Animation = new AnimationTick("Test_Animation_SpriteSheet", 0);
+            }
             //ObjectList.Add(this);
         }
 
@@ -127,7 +137,15 @@ namespace Prologue
 
         public void Draw()
         {
-            FrontSpriteBatch.Draw(Objectimg, new Rectangle((int)(this.Xcord - Screen.CameraX), (int)(this.Ycord - Screen.CameraY), (int)Screen.GridSize, (int)Screen.GridSize), Color.White);
+            if (IsAnimated)
+            {
+                Animation.Update();
+                SpriteSheet.screenDraw("Test_Animation_SpriteSheet", Animation.Row, Animation.Itteration, new Vector2((int)(this.Xcord - Screen.CameraX), (int)(this.Ycord - Screen.CameraY)), FrontSpriteBatch, (int)Screen.GridSize, (int)Screen.GridSize);
+            }
+            else
+            {
+                SpriteSheet.screenDraw("Test_Animation_SpriteSheet", 0, 1, new Vector2((int)(this.Xcord - Screen.CameraX), (int)(this.Ycord - Screen.CameraY)), FrontSpriteBatch, (int)Screen.GridSize, (int)Screen.GridSize);
+            }
         }
 
         public void Interact()
@@ -171,13 +189,13 @@ namespace Prologue
             _ObjectTiles.ForEach(y => Objects.ObjectList.Remove(Objects.ObjectList.Find(x => x.Xtile == y.Item1 && x.Ytile == y.Item2)));
             _ObjectTiles.ForEach(y => SolidTile.AllSolidTiles.Remove(SolidTile.AllSolidTiles.Find(x => x.Cords.Equals(y))));
 
-            Player.Player1.ChunckUpdate();
+            Chunck.Update();
         }
 
         public static void CreateObj(List<int[]> _objects)
         {
              _objects.ForEach(x => Objects.ObjectList.Add(new Objects(x[0], x[1], x[2])));
-            Player.Player1.ChunckUpdate();
+            Chunck.Update();
         }
     }
 

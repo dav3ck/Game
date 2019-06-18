@@ -27,8 +27,6 @@ namespace Prologue
 
         public EventHandler(int Event)
         {
-            Player.Frozen = true;
-
             LoadEventData(Event);
             CurrentStep = 0;
             EventRunning = true;
@@ -56,6 +54,7 @@ namespace Prologue
                     {
                         this.FullEvent = (JArray)item["Order"];
                         this.AmountSteps = (int)item["AmountofItems"];
+                        Player.FreezePlayer((bool)item["FreezePlayer"]);
                     }
                 }
             }
@@ -72,7 +71,7 @@ namespace Prologue
                 if (this.FullEvent.Count() - 1 == CurrentStep)
                 {
                     EventRunning = false;
-                    Player.Frozen = false;
+                    Player.FreezePlayer(false);
                 }
                 else
                 {
@@ -139,6 +138,14 @@ namespace Prologue
                 case 16: // Enable/Disable Autofollow
                     AutoFollow();
                     break;
+                case 17: // Freezes Player
+                    Player.FreezePlayer(true);
+                    break;
+                case 18: // UnFreezes Player
+                    Player.FreezePlayer(false);
+                    break;
+
+                    
             }
 
             if (WaitToFinish == false)
@@ -285,6 +292,7 @@ namespace Prologue
         {
             NPC.ToggleFollow("Mathijs");
         }
+
 
         //--------------------------------------------------------------------------------------
 

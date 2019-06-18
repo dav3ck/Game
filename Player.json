@@ -1,7 +1,7 @@
 {
   "Speed": 8,
   "Vertical_Horizontal_Speed": 0.5,
-  "Scale": 5,
+  "Scale": 3,
   "Frozen": false,
   "Image": "imgPlayer"
 }

@@ -5,7 +5,7 @@
   },
 
   "Textbox_Speed": 4,
-  "Char_Per_Line": 50,
+  "Char_Per_Line": 30,
   "yPerLine":  30,
 
   "Types": [

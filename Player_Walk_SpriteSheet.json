@@ -1,48 +1,55 @@
 {
-  "Name": "Textbox_SpriteSheet",
-  "Image":  "Textbox_Sprite",
+  "Name": "Player_Walk_SpriteSheet",
+  "Image": "Player_Walk_SpriteSheet",
   "Row": 4,
-  "Frames": 3,
+  "Frames": 4,
   "size": {
-    "w": 90,
+    "w": 64,
     "h": 120
   },
-  "Animation":  false,
+  "Animation": true,
   "Rows": [
     {
-      "RowNum": 1,
-      "Information": "Top Row Textbox Texture",
-      "Time":  5,
+      "RowNum": 1, 
+      "Information": "Player Walk up",
       "Frames": [
         {
           "FrameNumber": 1,
-          "Name": "Textbox_TopRight_Corner"
+          "Name": "Player_Walk_up_1"
         },
         {
           "FrameNumber": 2,
-          "Name": "Textbox_Top"
+          "Name": "Player_Walk_up_2"
         },
         {
           "FrameNumber": 3,
-          "Name": "Textbox_TopLeft_Corner"
+          "Name": "Player_Walk_up_3"
+        },
+        {
+          "FrameNumber": 4,
+          "Name": "Player_Walk_up_4"
         }
       ]
     },
     {
       "RowNum": 2,
-      "Information": "Middle Row Textbox Texture",
+      "Information": "Player Walk Right",
       "Frames": [
         {
           "FrameNumber": 1,
-          "Name": "Textbox_Middle_Right"
+          "Name": "Player_Walk_Right_1"
         },
         {
           "FrameNumber": 2,
-          "Name": "Textbox_Middle"
+          "Name": "Player_Walk_Right_2"
         },
         {
           "FrameNumber": 3,
-          "Name": "Textbox_Middle_Left"
+          "Name": "Player_Walk_Right_3"
+        },
+        {
+          "FrameNumber": 4,
+          "Name": "Player_Walk_Right_4"
         }
       ]
     },
@@ -60,6 +67,10 @@
         },
         {
           "FrameNumber": 3,
+          "Name": "Textbox_BottomLeft_Corner"
+        },
+        {
+          "FrameNumber": 4,
           "Name": "Textbox_BottomLeft_Corner"
         }
       ]
@@ -79,6 +90,10 @@
         {
           "FrameNumber": 3,
           "Name": "Name_TopLeft_Corner"
+        },
+        {
+          "FrameNumber": 4,
+          "Name": "Textbox_BottomLeft_Corner"
         }
       ]
     }
