@@ -186,7 +186,6 @@ namespace Prologue
             Player.Player1.NoNPCIntersect = !Player.Player1.NoNPCIntersect;
             npc.Follow = !npc.Follow;
         }
-
     }
 }
 

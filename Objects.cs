@@ -12,14 +12,11 @@ using System.IO;
 
 namespace Prologue
 {
-    class Objects
+    class Objects : TileSprites
     {
         public int Xtile { get; set; }
         public int Ytile { get; set; }
         public int chunck { get; set; }
-
-        public float Xcord { get; set; }
-        public float Ycord { get; set; }
 
         public bool Solid { get; set; }
         public int ID { get; set; }
@@ -35,11 +32,6 @@ namespace Prologue
         public bool CanInteract { get; set; }
 
         public static List<Objects> ObjectList = new List<Objects>();
-
-        private AnimationTick Animation { get; set; }
-        private bool IsAnimated { get; set; }
-        private string SpriteSheetName { get; set; }
-        private int AnimationIndex { get; set; }
 
         //------------------------------------------------------------
 
@@ -65,13 +57,7 @@ namespace Prologue
                 SolidTile.AllSolidTiles.Add(new SolidTile(Tuple.Create(Xtile, Ytile), chunck));
             }
 
-            IsAnimated = SpriteSheet.IsAnimated(SpriteSheet.GetSpriteSheet(SpriteSheetName));
-            if (IsAnimated == true)
-            {
-                Animation = AnimationTick.GetAnimationTick(SpriteSheetName, 0);
-                AnimationIndex = Animation.AssignAnimationIndex();
-            }
-            
+            InitializeAnimation(SpriteSheetName, 0, 0);
             //ObjectList.Add(this);
         }
 
@@ -136,18 +122,6 @@ namespace Prologue
                 this.Objectimg = prologueContent.Tile1;
             }
         } 
-
-        public void Draw()
-        {
-            int x = 1;
-            if (IsAnimated)
-            {
-                x = Animation.GetIterationIndexValue(AnimationIndex);
-            }
-
-            SpriteSheet.screenDraw("Test_Animation_SpriteSheet", 0, x, new Vector2((int)(this.Xcord - Screen.CameraX), (int)(this.Ycord - Screen.CameraY)), FrontSpriteBatch, (int)Screen.GridSize, (int)Screen.GridSize);
-        
-        }
 
         public void Interact()
         {

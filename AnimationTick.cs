@@ -15,6 +15,7 @@ namespace Prologue
 
         public static int Count = 01;
         public static Random x = new Random();
+        private bool Synchronize = false;
 
         public static List<AnimationTick> AnimationTickList = new List<AnimationTick>();
 
@@ -58,6 +59,10 @@ namespace Prologue
 
         public int GetIterationIndexValue(int Index)
         {
+            if (Synchronize)
+            {
+                return Itterations.First();
+            }
             return Itterations[Index];
         }
 

@@ -71,6 +71,7 @@
     <Compile Include="TexturePackerLoader\SpriteSheet.cs" />
     <Compile Include="TexturePackerLoader\SpriteSheetLoader.cs" />
     <Compile Include="Tiles.cs" />
+    <Compile Include="TileSprites.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>
   <ItemGroup>
